@@ -1,0 +1,15 @@
+server:
+  port: 8086
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/habrdb
+    driverClassName: org.postgresql.Driver
+    username: "habrpguser"
+    password: "pgpwd4habr"
+  liquibase:
+    parameters:
+      clearCheckSums: true
+
+
+

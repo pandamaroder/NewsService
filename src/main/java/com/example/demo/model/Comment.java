@@ -14,6 +14,8 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Getter
+@Setter
 @Table(name = "comments")
 public class Comment {
     @Id

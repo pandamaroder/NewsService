@@ -4,6 +4,7 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comments;
 
 import java.util.List;
@@ -11,11 +12,13 @@ import java.util.Set;
 
 
 @ToString
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Getter
+@Setter
 @Table(name = "news")
 public class News {
     @Id

@@ -4,17 +4,20 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 
 @ToString
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-@Table(name = "categories")
+@Getter
+@Setter
+@Table(name = "categories", schema = "demo")
 public class Category {
     @Id
     @Column(name = "id", nullable = false)

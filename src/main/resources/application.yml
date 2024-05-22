@@ -13,6 +13,9 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none #never ever use in production
+    properties:
+      hibernate:
+        default_schema: demo
 
 
 

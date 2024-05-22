@@ -12,7 +12,7 @@ import java.util.Set;
 
 @ActiveProfiles("test")
 @SpringBootTest
-public class BaseEntityTests {
+public class BaseEntityTests extends DemoApplicationBaseConfigTests{
 
     protected void assertThatAllEntitiesDoesNotHavePrimitiveNullableFields() {
         final Set<Class<?>> allEntities = new Reflections("com.example.demo").getTypesAnnotatedWith(Entity.class);

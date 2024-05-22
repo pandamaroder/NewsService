@@ -13,7 +13,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @Testcontainers
 @SpringBootTest
 @ActiveProfiles("test")
-public class UserServiceTests extends DemoApplicationTests{
+public class UserServiceTests extends DemoApplicationBaseConfigTests {
     @Autowired
     CategoryService categoryService;
 

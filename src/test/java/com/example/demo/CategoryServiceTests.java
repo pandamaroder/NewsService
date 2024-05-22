@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @SpringBootTest
 @ActiveProfiles("test")
-public class CategoryServiceTests extends DemoApplicationTests{
+public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
     @Autowired
     CategoryService categoryService;
 

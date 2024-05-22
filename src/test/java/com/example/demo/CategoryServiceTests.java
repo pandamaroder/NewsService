@@ -2,6 +2,7 @@ package com.example.demo;
 
 import com.example.demo.dto.CategoryCreateRequest;
 import com.example.demo.dto.CategoryCreateResponse;
+import com.example.demo.dto.CategoryDto;
 import com.example.demo.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,4 +41,29 @@ public class CategoryServiceTests extends DemoApplicationTests{
     }
 
 
+    @Test
+    void deleteCategory() {
+        CategoryDto categoryDto = categoryService.deleteCategory(1);
+
+        assertThat(categoryDto)
+                .isNotNull();
+        assertThat(categoryDto.getId())
+                .isNotNull();
+        assertThat(categoryDto.getName())
+                .isEqualTo("defaultCategory");
+    }
+
+
+    @Test
+    void updateCategory() {
+        CategoryDto testCategoryDto = CategoryDto.builder().name("Changed Category").build();
+        CategoryDto categoryDto = categoryService.updateCategory(testCategoryDto);
+
+        assertThat(categoryDto)
+                .isNotNull();
+        assertThat(categoryDto.getId())
+                .isNotNull();
+        assertThat(categoryDto.getName())
+                .isEqualTo("Changed Category");
+    }
 }

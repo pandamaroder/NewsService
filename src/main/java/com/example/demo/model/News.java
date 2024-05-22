@@ -31,6 +31,7 @@ public class News {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     User user;
 
     @ManyToOne
@@ -38,6 +39,7 @@ public class News {
     private Category category;
 
     @OneToMany(mappedBy = "news")
+    @ToString.Exclude
     List<Comment> commentsList;
 
 }

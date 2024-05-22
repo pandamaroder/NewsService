@@ -1,15 +1,15 @@
 package com.example.demo.controllers;
 
+import com.example.demo.dto.UserCreateRequest;
+import com.example.demo.dto.UserCreateResponse;
+import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
 import com.example.demo.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/users")
@@ -20,9 +20,17 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody @Valid User user) {
-        User createdUser = userService.createUser(user);
+    public ResponseEntity<?> createUser(@RequestBody @Valid UserCreateRequest userCreateRequest) {
+        UserCreateResponse createdUser = userService.createUser(userCreateRequest);
         return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
+    }
+
+    //public ResponseEntity<UserDto> deleteUser(@PathVariable("id") int id)
+    @DeleteMapping("{id}")
+    public ResponseEntity<UserDto> deleteUser(@PathVariable("id") int id) {
+        UserDto deletedUser = userService.deleteUser(id);
+        return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);
+       // ResponseEntity.ok(deletedUser.getId())
     }
 
 }

@@ -4,7 +4,7 @@ create sequence if not exists demo.user_seq;
 --changeset olga.kukushkina:2024.05.12:users.table
 create table if not exists demo.users (
     id bigint primary key default nextval('demo.user_seq'),
-    username varchar(255) not null
+    username varchar(255) not null unique
 );
 
 --changeset olga.kukushkina:2024.05.12:news.sequence

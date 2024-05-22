@@ -27,10 +27,12 @@ public class Comment {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     User user;
 
     @ManyToOne
     @JoinColumn(name = "news_id")
+    @ToString.Exclude
     News news;
 
 

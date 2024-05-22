@@ -2,6 +2,7 @@ package com.example.demo.helpers;
 
 import com.example.demo.model.Category;
 import com.example.demo.model.News;
+import com.example.demo.model.User;
 
 import java.util.Random;
 
@@ -54,5 +55,9 @@ public class DataHelper {
 
     public  static Category.CategoryBuilder<?,?> preparePlainCategory() {
         return Category.builder();
+    }
+
+    public  static User.UserBuilder<?,?> prepareUser() {
+        return User.builder().username("Test");
     }
 }

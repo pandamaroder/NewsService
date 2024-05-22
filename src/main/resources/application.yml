@@ -10,6 +10,9 @@ spring:
   liquibase:
     parameters:
       clearCheckSums: true
+  jpa:
+    hibernate:
+      ddl-auto: none #never ever use in production
 
 
 

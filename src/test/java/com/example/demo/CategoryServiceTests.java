@@ -3,6 +3,7 @@ package com.example.demo;
 import com.example.demo.dto.CategoryCreateRequest;
 import com.example.demo.dto.CategoryCreateResponse;
 import com.example.demo.dto.CategoryDto;
+import com.example.demo.helpers.DataHelper;
 import com.example.demo.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,9 +27,9 @@ public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
     void createNewCategory() {
         String countRowsSql = "SELECT COUNT(*) FROM demo.categories";
         Integer countCategoryBefore = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
-
+        String categoryName = DataHelper.getAlphabeticString(10);
         CategoryCreateResponse testCategory = categoryService
-                .createCategory(new CategoryCreateRequest("New Category"));
+                .createCategory(new CategoryCreateRequest(categoryName));
         Integer countCategoryAfter = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
         assertThat(countCategoryAfter-countCategoryBefore)
                 .isOne();
@@ -38,7 +39,7 @@ public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
         assertThat(testCategory.id())
                 .isPositive();
         assertThat(testCategory.name())
-                .isEqualTo("New Category");
+                .isEqualTo(categoryName);
 
 
     }

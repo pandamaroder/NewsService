@@ -20,11 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "news")
-public class News {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class News extends BaseEntity{
 
     private String title;
     private String content;

@@ -10,6 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+import static org.springframework.transaction.annotation.Propagation.MANDATORY;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -23,25 +27,37 @@ public class CategoryService {
         Category savedCategory = categoryRepository.save(category);
         return new CategoryCreateResponse(savedCategory.getId(), savedCategory.getName());
     }
+    @Transactional(propagation = MANDATORY)
+    public Category createIfNeedCategory(String categoryName) {
+        Optional<Category> categoryByName = categoryRepository.findByName(categoryName);
+        if (categoryByName.isPresent()) {
+            return categoryByName.get();
+        }
+        Category category = Category.builder().name(categoryName).build();
+        Category savedCategory = categoryRepository.save(category);
+        return savedCategory;
+    }
 
     @Transactional
-    public CategoryDto deleteCategory(long userId) {
+    public CategoryDto deleteCategory(long categoryId) {
         Category category = categoryRepository
-                .findById(userId)
+                .findById(categoryId)
                 .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));;
         categoryRepository.delete(category);
-        return CategoryDto.builder()
-                .name(category.getName())
-                .id(category.getId()).build();
+        return new CategoryDto(category.getId(), category.getName());
+        //посчитать инкремент/ декремент
     }
 
     @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
         //нужен ли здесь categoryId?
-        Category category = Category.builder().name(categoryDto.getName()).build();
-        categoryRepository.save(category);
-        return CategoryDto.builder()
-                .name(category.getName())
-                .id(category.getId()).build();
+        //получаем по ID
+        Category categoryToUpdate = categoryRepository
+                .findById(categoryDto.id())
+                .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
+        categoryToUpdate.setName(categoryDto.name());
+        categoryRepository.save(categoryToUpdate);
+        return new CategoryDto(categoryToUpdate.getId(), categoryToUpdate.getName());
     }
+
 }

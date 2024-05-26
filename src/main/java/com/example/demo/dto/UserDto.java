@@ -16,13 +16,13 @@ import java.util.Set;
 @SuperBuilder
 public class UserDto {
 
-    private Long id;
+    private long id;
 
 
     private String username;
 
 
-    //Set<News> newsList;
+    //Set<NewsDto> newsList;
 
 
     //List<CommentDto> commentsDtosList;

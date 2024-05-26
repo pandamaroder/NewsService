@@ -11,10 +11,14 @@ spring:
     parameters:
       clearCheckSums: true
   jpa:
+    show-sql: true #!!!
+    open-in-view: false
     hibernate:
       ddl-auto: none #never ever use in production
     properties:
       hibernate:
+
+        format_sql: true
         default_schema: demo
 
 

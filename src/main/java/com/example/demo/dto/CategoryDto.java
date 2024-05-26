@@ -7,14 +7,9 @@ import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
-@Getter
-@SuperBuilder
-public class CategoryDto {
 
-    private Long id;
+public record CategoryDto(long id, String name) {
 
-    private String name;
 
-    //зачем - мысль что ссписок новостей можкт понадобится при апдейте категориии
-    //private List<NewsDto> newsList;
+
 }

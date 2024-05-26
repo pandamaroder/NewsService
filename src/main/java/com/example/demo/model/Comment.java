@@ -17,11 +17,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "comments")
-public class Comment {
-    @Id
-    @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Comment extends BaseEntity{
 
     private String text;
 

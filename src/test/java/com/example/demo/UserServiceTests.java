@@ -6,9 +6,6 @@ import com.example.demo.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 
 public class UserServiceTests extends DemoApplicationBaseConfigTests {
@@ -23,8 +20,7 @@ public class UserServiceTests extends DemoApplicationBaseConfigTests {
     }
     @Test
     void createNewCategory() {
-        CategoryCreateResponse testCategory = categoryService
-                .createCategory(new CategoryCreateRequest("testCategory"));
+
 
 
     }

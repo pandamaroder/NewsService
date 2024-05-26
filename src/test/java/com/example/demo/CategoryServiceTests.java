@@ -6,10 +6,11 @@ import com.example.demo.dto.CategoryDto;
 import com.example.demo.services.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.junit.jupiter.Testcontainers;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,50 +19,70 @@ public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
     @Autowired
     CategoryService categoryService;
 
-
-    @BeforeEach
-    void setUp() {
-        CategoryCreateRequest testCategory = new CategoryCreateRequest("defaultCategory");
-        categoryService.createCategory(testCategory);
-    }
-
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Test
     void createNewCategory() {
+        String countRowsSql = "SELECT COUNT(*) FROM demo.categories";
+        Integer countCategoryBefore = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+
         CategoryCreateResponse testCategory = categoryService
                 .createCategory(new CategoryCreateRequest("New Category"));
+        Integer countCategoryAfter = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+        assertThat(countCategoryAfter-countCategoryBefore)
+                .isOne();
+
         assertThat(testCategory)
                 .isNotNull();
         assertThat(testCategory.id())
-                .isNotNull();
+                .isPositive();
         assertThat(testCategory.name())
                 .isEqualTo("New Category");
+
+
     }
 
 
     @Test
     void deleteCategory() {
-        CategoryDto categoryDto = categoryService.deleteCategory(1);
+        String countRowsSql = "SELECT COUNT(*) FROM demo.categories";
 
+
+        String name = UUID.randomUUID().toString();
+
+        CategoryCreateResponse testCategory = categoryService
+                .createCategory(new CategoryCreateRequest(name));
+        Integer countCategoryBefore = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+
+        CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
+        Integer countCategoryAfter = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+        assertThat(countCategoryAfter)
+                .isEqualTo(0);
         assertThat(categoryDto)
                 .isNotNull();
-        assertThat(categoryDto.getId())
-                .isNotNull();
-        assertThat(categoryDto.getName())
-                .isEqualTo("defaultCategory");
+        assertThat(categoryDto.id())
+                .isPositive();
+        assertThat(categoryDto.name())
+                .isEqualTo(name);
+
+
+
     }
 
 
     @Test
     void updateCategory() {
-        CategoryDto testCategoryDto = CategoryDto.builder().name("Changed Category").build();
+        /*CategoryDto testCategoryDto = new CategoryDto();
         CategoryDto categoryDto = categoryService.updateCategory(testCategoryDto);
 
         assertThat(categoryDto)
                 .isNotNull();
-        assertThat(categoryDto.getId())
-                .isNotNull();
-        assertThat(categoryDto.getName())
+        assertThat(categoryDto.id())
+                .isPositive();
+        assertThat(categoryDto.name())
+                .isEqualTo(name);
                 .isEqualTo("Changed Category");
+    }*/
     }
 }

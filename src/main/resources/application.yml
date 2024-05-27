@@ -17,7 +17,6 @@ spring:
       ddl-auto: none #never ever use in production
     properties:
       hibernate:
-
         format_sql: true
         default_schema: demo
 

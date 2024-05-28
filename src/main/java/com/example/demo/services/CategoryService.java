@@ -45,13 +45,12 @@ public class CategoryService {
                 .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));;
         categoryRepository.delete(category);
         return new CategoryDto(category.getId(), category.getName());
-        //посчитать инкремент/ декремент
+        //посчитать инкремент/ декремент в тестах
     }
 
     @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
-        //нужен ли здесь categoryId?
-        //получаем по ID
+
         Category categoryToUpdate = categoryRepository
                 .findById(categoryDto.id())
                 .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));

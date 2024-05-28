@@ -6,7 +6,7 @@ import org.springframework.context.ApplicationContext;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BaseContextTest extends DemoApplicationBaseConfigTests {
+public class BaseContextTest extends TestBase {
     @Autowired
     private ApplicationContext applicationContext;
     @Test

@@ -4,6 +4,7 @@ plugins {
 	id("io.spring.dependency-management") version "1.1.4"
 	id("pmd")
 	id("jacoco")
+	id("org.sonarqube") version "4.0.0.2929"
 }
 
 group = "com.example"
@@ -65,6 +66,19 @@ tasks.withType<Pmd> {
 	}
 	ruleSetFiles = files("config/pmd/pmd.xml")
 
+}
+
+sonarqube {
+	properties {
+		property("sonar.projectKey", "pandamaroder_NewsService")
+		property("sonar.organization", "pandamaroder")
+		property("sonar.host.url", "https://sonarcloud.io")
+	}
+}
+
+tasks.register("sonarAnalyze") {
+	dependsOn("build")
+	finalizedBy("sonarqube")
 }
 
 tasks.check {

@@ -5,9 +5,7 @@ import com.example.demo.dto.CategoryCreateResponse;
 import com.example.demo.dto.CategoryDto;
 import com.example.demo.helpers.DataHelper;
 import com.example.demo.services.CategoryService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -16,7 +14,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
+public class CategoryServiceTests extends TestBase {
     @Autowired
     CategoryService categoryService;
 
@@ -58,8 +56,8 @@ public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
 
         CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
         Integer countCategoryAfter = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
-        assertThat(countCategoryAfter)
-                .isEqualTo(0);
+        assertThat(countCategoryBefore - countCategoryAfter)
+                .isOne();
         assertThat(categoryDto)
                 .isNotNull();
         assertThat(categoryDto.id())
@@ -72,18 +70,28 @@ public class CategoryServiceTests extends DemoApplicationBaseConfigTests {
     }
 
 
-    @Test
+   /* @Test
     void updateCategory() {
-        /*CategoryDto testCategoryDto = new CategoryDto();
-        CategoryDto categoryDto = categoryService.updateCategory(testCategoryDto);
+        String countRowsSql = "SELECT COUNT(*) FROM demo.categories";
 
-        assertThat(categoryDto)
+        String categoryName = DataHelper.getAlphabeticString(10);
+        CategoryCreateResponse testCategory = categoryService
+                .createCategory(new CategoryCreateRequest(categoryName));
+        Integer countCategoryBefore = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+        String updatedCategoryName = DataHelper.getAlphabeticString(5);
+        CategoryDto updatedCategory = new CategoryDto(testCategory.id(), updatedCategoryName);
+        CategoryDto categoryDto = categoryService.updateCategory(updatedCategory);
+
+        Integer countCategoryAfter = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+        assertThat(countCategoryAfter-countCategoryBefore)
+                .isEqualTo(0);
+
+        assertThat(testCategory)
                 .isNotNull();
         assertThat(categoryDto.id())
                 .isPositive();
         assertThat(categoryDto.name())
-                .isEqualTo(name);
-                .isEqualTo("Changed Category");
+                .isEqualTo(updatedCategoryName);
+
     }*/
-    }
 }

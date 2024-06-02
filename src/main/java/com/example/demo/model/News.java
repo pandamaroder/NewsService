@@ -6,6 +6,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Comments;
+import org.hibernate.annotations.NaturalId;
 
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,8 @@ import java.util.Set;
 public class News extends BaseEntity{
 
     private String title;
+    @NaturalId
+    @Column(name = "content", nullable = false, unique = true)
     private String content;
 
     @ManyToOne

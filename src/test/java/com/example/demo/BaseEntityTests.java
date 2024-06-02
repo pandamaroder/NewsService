@@ -27,17 +27,15 @@ public class BaseEntityTests extends TestBase {
 
     @Test
     void testEntityIsCorrect() {
-       /* // Создаем набор сущностей для тестирования
+
         Set<Category> entities = new HashSet<>();
         Category entity1 = DataHelper.prepareCategory().build();
         Category entity2 = Category.builder().name("test2").build();
         entities.add(entity1);
         entities.add(entity2);
-
-        // Вызываем метод assertThatEntityIsCorrect для проверки сущностей
         assertThatEntityIsCorrect(entities, categoryRepository);
-    }*/
     }
+
 }
 
 

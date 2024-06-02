@@ -3,6 +3,7 @@ package com.example.demo.helpers;
 import com.example.demo.model.Category;
 import com.example.demo.model.News;
 import com.example.demo.model.User;
+import jakarta.annotation.Nonnull;
 
 import java.util.Random;
 
@@ -60,4 +61,23 @@ public class DataHelper {
     public  static User.UserBuilder<?,?> prepareUser() {
         return User.builder().username("Test");
     }
+
+    /*@Nonnull
+    public static Employee preparePetrPetrov() {
+        return Employee.builder()
+                .id(UUID.randomUUID())
+                .firstName("Petr")
+                .lastName("Petrov")
+                .salaryPerHour(new BigDecimal("1098.12"))
+                .standardHoursPerDay(8)
+                .build();
+    }
+
+    @Nonnull
+    public Salary.SalaryBuilder<?, ?> prepareSalary() {
+        return Salary.builder()
+                .id(UUID.randomUUID())
+                .workingDaysCount(4)
+                .totalAmount(new BigDecimal("12534.00"));
+    }*/
 }

@@ -1,8 +1,6 @@
 package com.example.demo.services;
-import com.example.demo.dto.CategoryCreateRequest;
-import com.example.demo.dto.CategoryCreateResponse;
-import com.example.demo.dto.NewsCreateRequest;
-import com.example.demo.dto.NewsDto;
+import com.example.demo.dto.*;
+import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Category;
 import com.example.demo.model.News;
 import com.example.demo.repositories.CategoryRepository;
@@ -23,21 +21,31 @@ public class NewsService {
 
 
     @Transactional
-   public NewsDto createNews(NewsCreateRequest newsCreateRequest) {
+   public NewsDto createNews(NewsDto newsDto) {
        Category categoryResponse = categoryService
-               .createIfNeedCategory(newsCreateRequest.getCategoryName());
+               .createIfNeedCategory(newsDto.getCategoryName());
 
        News news = News.builder()
-               .title(newsCreateRequest.getTitle())
-               .content(newsCreateRequest.getContent())
+               .title(newsDto.getTitle())
+               .content(newsDto.getContent())
                //пытаемся понять по id - возвращает прокси объект
                .user(userRepository
-                       .getReferenceById(newsCreateRequest.getUserId()))
+                       .getReferenceById(newsDto.getUserId()))
                .category(categoryResponse)
                .build();
 
-       newsRepository.save(news);
-       return null;
+        News savedNews = newsRepository.save(news);
+        return NewsDto.builder().id(savedNews.getId()).categoryName(newsDto.getCategoryName())
+                .content(newsDto.getContent())
+                .title(newsDto.getTitle())
+                .userId(newsDto.getUserId()).build();
 
    }
+
+    @Transactional
+    public NewsDto deleteNews(long newsId) {
+        //TODO при удалении новости -> каскадное удаление всех связанных комментариев
+
+    }
+
 }

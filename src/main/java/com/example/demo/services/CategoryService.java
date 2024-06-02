@@ -27,7 +27,7 @@ public class CategoryService {
         Category savedCategory = categoryRepository.save(category);
         return new CategoryCreateResponse(savedCategory.getId(), savedCategory.getName());
     }
-    @Transactional(propagation = MANDATORY)
+    @Transactional(propagation = MANDATORY) // только в рамках существующей категории
     public Category createIfNeedCategory(String categoryName) {
         Optional<Category> categoryByName = categoryRepository.findByName(categoryName);
         if (categoryByName.isPresent()) {
@@ -46,6 +46,7 @@ public class CategoryService {
         categoryRepository.delete(category);
         return new CategoryDto(category.getId(), category.getName());
         //посчитать инкремент/ декремент в тестах
+        //TODO удаление категории должно вызывать удаление всех связанных новостей и комментариев!!!
     }
 
     @Transactional

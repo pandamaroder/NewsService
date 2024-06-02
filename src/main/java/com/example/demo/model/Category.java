@@ -26,6 +26,7 @@ public class Category extends BaseEntity{
     private String name;
 
     @OneToMany(mappedBy = "category")
+    @ToString.Exclude
     private List<News> newsList;
 
 }

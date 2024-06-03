@@ -14,8 +14,9 @@ import java.util.*;
 
 
 public class BaseEntityTests extends TestBase {
+
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
 
     @Test
     void assertThatAllEntitiesDoesNotHavePrimitiveNullableFields() {

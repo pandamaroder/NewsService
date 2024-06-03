@@ -21,11 +21,11 @@ import java.util.List;
 @Table(name = "categories", schema = "demo")
 public class Category extends BaseEntity{
 
-    @NaturalId
+
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<News> newsList;
 

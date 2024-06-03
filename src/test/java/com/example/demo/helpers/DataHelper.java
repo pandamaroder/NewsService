@@ -6,6 +6,7 @@ import com.example.demo.model.User;
 import jakarta.annotation.Nonnull;
 
 import java.util.Random;
+import java.util.UUID;
 
 public class DataHelper {
 
@@ -62,22 +63,12 @@ public class DataHelper {
         return User.builder().username("Test");
     }
 
-    /*@Nonnull
-    public static Employee preparePetrPetrov() {
-        return Employee.builder()
-                .id(UUID.randomUUID())
-                .firstName("Petr")
-                .lastName("Petrov")
-                .salaryPerHour(new BigDecimal("1098.12"))
-                .standardHoursPerDay(8)
+    //TODO добавить лист с комментариями
+    public static User preparePetrPetrov() {
+        return User.builder()
+                .id(Long.valueOf(getNumeric(3)))
+                .username("PetrPetrov")
                 .build();
     }
 
-    @Nonnull
-    public Salary.SalaryBuilder<?, ?> prepareSalary() {
-        return Salary.builder()
-                .id(UUID.randomUUID())
-                .workingDaysCount(4)
-                .totalAmount(new BigDecimal("12534.00"));
-    }*/
 }

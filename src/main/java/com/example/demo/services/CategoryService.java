@@ -45,8 +45,6 @@ public class CategoryService {
                 .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));;
         categoryRepository.delete(category);
         return new CategoryDto(category.getId(), category.getName());
-        //посчитать инкремент/ декремент в тестах
-        //TODO удаление категории должно вызывать удаление всех связанных новостей и комментариев!!!
     }
 
     @Transactional

@@ -5,37 +5,37 @@
          xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
     <description>PMD configuration</description>
 
-  <!--  <rule ref="category/java/bestpractices.xml">
-        &lt;!&ndash;<exclude name="JUnitTestContainsTooManyAsserts"/>
+    <rule ref="category/java/bestpractices.xml">
+        <exclude name="JUnitTestContainsTooManyAsserts"/>
         <exclude name="JUnitAssertionsShouldIncludeMessage"/>
-        <exclude name="GuardLogStatement"/>&ndash;&gt;
+        <exclude name="GuardLogStatement"/>
     </rule>
 
 
     <rule ref="category/java/codestyle.xml">
         <exclude name="AtLeastOneConstructor"/>
-   &lt;!&ndash;     <exclude name="OnlyOneReturn"/>
+        <exclude name="OnlyOneReturn"/>
         <exclude name="AtLeastOneConstructor"/>
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="LongVariable"/>
-        <exclude name="ShortVariable"/>&ndash;&gt;
+        <exclude name="ShortVariable"/>
     </rule>
 
     <rule ref="category/java/design.xml">
-        &lt;!&ndash;<exclude name="LawOfDemeter"/>
+        <exclude name="LawOfDemeter"/>
         <exclude name="LoosePackageCoupling"/>
         <exclude name="AvoidCatchingGenericException"/>
-        <exclude name="UseUtilityClass"/>&ndash;&gt;
+        <exclude name="UseUtilityClass"/>
     </rule>
 
-  &lt;!&ndash;No need for test project&ndash;&gt;
-  &lt;!&ndash;  <rule ref="category/java/documentation.xml">
-        &lt;!&ndash;<exclude name="CommentRequired"/>
-        <exclude name="CommentSize"/>&ndash;&gt;
-    </rule>&ndash;&gt;
+  No need for test project
+    <rule ref="category/java/documentation.xml">
+        <exclude name="CommentRequired"/>
+        <exclude name="CommentSize"/>
+    </rule>
 
     <rule ref="category/java/multithreading.xml">
-        &lt;!&ndash;<exclude name="DoNotUseThreads"/>&ndash;&gt;
+        <exclude name="DoNotUseThreads"/>
     </rule>
 
     <rule ref="category/java/performance.xml"/>
@@ -43,7 +43,7 @@
     <rule ref="category/java/security.xml"/>
 
     <rule ref="category/java/errorprone.xml">
-       &lt;!&ndash; <exclude name="DataflowAnomalyAnalysis"/>&ndash;&gt;
+        <exclude name="DataflowAnomalyAnalysis"/>
         <exclude name="SystemPrintln"/>
-    </rule>-->
+    </rule>
 </ruleset>

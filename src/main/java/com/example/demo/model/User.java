@@ -23,17 +23,17 @@ import java.util.Set;
 @Table(name = "users")
 public class User extends BaseEntity{
 
-    @NaturalId
+
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     @OneToMany(mappedBy = "user")
     @ToString.Exclude
-    List<News> newsList;
+    private List<News> newsList;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    List<Comment> commentsList;
+    private List<Comment> commentsList;
 
     @Override
     public boolean equals(Object o) {

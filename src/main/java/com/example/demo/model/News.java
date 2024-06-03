@@ -31,14 +31,14 @@ public class News extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id")
     @ToString.Exclude
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
-    @OneToMany(mappedBy = "news")
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
-    List<Comment> commentsList;
+    private List<Comment> commentsList;
 
 }

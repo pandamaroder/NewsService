@@ -11,17 +11,14 @@ import org.testcontainers.utility.DockerImageName;
 
 public class PostgresInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-
-    private static final Network NETWORK = Network.newNetwork();
     private static final PostgreSQLContainer<?> CONTAINER =
-            new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1"));
+            new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1"))
+                    .withUrlParam("prepareThreshold", "0")
+                    .waitingFor(Wait.forListeningPort());
 
     @Override
     public void initialize(final ConfigurableApplicationContext context) {
         CONTAINER
-            .withNetwork(NETWORK)
-            .withUrlParam("prepareThreshold", "0")
-            .waitingFor(Wait.forListeningPort())
             .start();
 
         TestPropertyValues.of(

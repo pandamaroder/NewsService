@@ -1,10 +1,19 @@
 package com.example.demo;
 
+import com.example.demo.dto.NewsDto;
+import com.example.demo.dto.UserCreateRequest;
+import com.example.demo.dto.UserCreateResponse;
+import com.example.demo.helpers.DataHelper;
 import com.example.demo.model.BaseEntity;
+import com.example.demo.model.User;
+import com.example.demo.services.NewsService;
+import com.example.demo.services.UserService;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
@@ -16,9 +25,34 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
 @ActiveProfiles("test")
-@SpringBootTest()
+@SpringBootTest
 @ContextConfiguration(initializers = PostgresInitializer.class)
 public abstract class TestBase {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    private NewsService newsService;
+
+    @Autowired
+    private UserService userService;
+
+    protected int getEntriesCount(String tableName) {
+        String countRowsSql = String.format("SELECT COUNT(*) FROM %s", tableName);
+        Integer count = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+        return count != null ? count : 0;
+    }
+
+    protected void prepareNewsWithUsers(String categoryName) {
+        User user = DataHelper.preparePetrPetrov();
+        UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
+        UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
+        NewsDto news = newsService.createNews(NewsDto.builder().title("test").content("test")
+                .userId(petrPetrov.userId()).categoryName(categoryName).build());
+        NewsDto newsOther = newsService.createNews(NewsDto.builder().title("testOther").content("testOther")
+                .userId(userOther.userId()).categoryName(categoryName).build());
+    }
 
     protected <T> void assertThatNullableFieldsAreNotPrimitive(final Class<T> entityClass) {
         Arrays.stream(entityClass.getDeclaredFields())

@@ -45,7 +45,7 @@ public class NewsService {
     @Transactional
     public NewsDto deleteNews(long newsId) {
         //TODO при удалении новости -> каскадное удаление всех связанных комментариев
-
+      return null;
     }
 
 }

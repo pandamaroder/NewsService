@@ -1,6 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.dto.*;
+import com.example.demo.dto.CategoryCreateRequest;
+import com.example.demo.dto.CategoryCreateResponse;
+import com.example.demo.dto.CategoryDto;
 import com.example.demo.helpers.DataHelper;
 import com.example.demo.model.Category;
 import com.example.demo.repositories.CategoryRepository;
@@ -12,14 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.IllegalTransactionStateException;
 import org.springframework.transaction.support.TransactionTemplate;
 
-import java.util.UUID;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import java.util.UUID;
 
-public class CategoryServiceTests extends TestBase{
+public class CategoryServiceTests extends TestBase {
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -36,24 +36,20 @@ public class CategoryServiceTests extends TestBase{
     @Autowired
     private NewsService newsService;
 
-
-
-
-
     private CategoryCreateResponse createCategory(String categoryName) {
-        CategoryCreateResponse testCategory = categoryService
+        return categoryService
                 .createCategory(new CategoryCreateRequest(categoryName));
-        return testCategory;
     }
+
     @Test
     void createNewCategory() {
-        String categoryName = DataHelper.getAlphabeticString(10);
+        final String categoryName = DataHelper.getAlphabeticString(10);
 
-        int countCategoryBefore = getEntriesCount("demo.categories");
-        CategoryCreateResponse testCategory = createCategory(categoryName);
-        int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final CategoryCreateResponse testCategory = createCategory(categoryName);
+        final int countCategoryAfter = getEntriesCount("demo.categories");
 
-        assertThat(countCategoryAfter-countCategoryBefore)
+        assertThat(countCategoryAfter - countCategoryBefore)
                 .isOne();
 
         assertThat(testCategory)
@@ -62,19 +58,17 @@ public class CategoryServiceTests extends TestBase{
                 .isPositive();
         assertThat(testCategory.name())
                 .isEqualTo(categoryName);
-
-
     }
 
     @Test
     void deleteCategory() {
-        String name = UUID.randomUUID().toString();
+        final String name = UUID.randomUUID().toString();
         createCategory(DataHelper.getAlphabeticString(10));
-        CategoryCreateResponse testCategory = createCategory(name);
+        final CategoryCreateResponse testCategory = createCategory(name);
 
-        int countCategoryBefore = getEntriesCount("demo.categories");
-        CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
-        int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
+        final int countCategoryAfter = getEntriesCount("demo.categories");
 
         assertThat(countCategoryBefore - countCategoryAfter)
                 .isOne();
@@ -86,19 +80,17 @@ public class CategoryServiceTests extends TestBase{
                 .isEqualTo(name);
     }
 
-
-
     @Test
     void updateCategory() {
-        CategoryCreateResponse testCategory = createCategory(DataHelper.getAlphabeticString(10));
+        final CategoryCreateResponse testCategory = createCategory(DataHelper.getAlphabeticString(10));
 
-        int countCategoryBefore = getEntriesCount("demo.categories");
-        String updatedCategoryName = DataHelper.getAlphabeticString(5);
-        CategoryDto updatedCategory = new CategoryDto(testCategory.id(), updatedCategoryName);
-        CategoryDto categoryDtoAfterUpdate = categoryService.updateCategory(updatedCategory);
-        int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final String updatedCategoryName = DataHelper.getAlphabeticString(5);
+        final CategoryDto updatedCategory = new CategoryDto(testCategory.id(), updatedCategoryName);
+        final CategoryDto categoryDtoAfterUpdate = categoryService.updateCategory(updatedCategory);
+        final int countCategoryAfter = getEntriesCount("demo.categories");
 
-        assertThat(countCategoryAfter-countCategoryBefore)
+        assertThat(countCategoryAfter - countCategoryBefore)
                 .isZero();
         assertThat(testCategory)
                 .isNotNull();
@@ -106,22 +98,16 @@ public class CategoryServiceTests extends TestBase{
                 .isPositive();
         assertThat(categoryDtoAfterUpdate.name())
                 .isEqualTo(updatedCategoryName);
-
     }
 
     @Test
     void testCreateIfNeedCategoryInTransaction() {
-        String categoryName = "testCategory";
+        final String categoryName = "testCategory";
         assertThat(categoryRepository.findByName(categoryName))
                 .isNotPresent();
 
-        Category category = transactionTemplate.execute(status -> {
-            try {
-                return categoryService.createIfNeedCategory(categoryName);
-            } catch (Exception e) {
-                status.setRollbackOnly();
-                throw e;
-            }
+        final Category category = transactionTemplate.execute(status -> {
+            return categoryService.createIfNeedCategory(categoryName);
         });
         assertThat(categoryRepository.findByName(categoryName))
                 .isNotNull();
@@ -131,34 +117,26 @@ public class CategoryServiceTests extends TestBase{
                 .isPositive();
         assertThat(category.getName())
                 .isEqualTo(categoryName);
-
     }
 
     @Test
     void testCreateIfNeedCategoryWithoutTransaction() {
-        String categoryName = "testCategoryNoTransaction";
+        final String categoryName = "testCategoryNoTransaction";
 
         assertThatThrownBy(() -> categoryService
-                .createIfNeedCategory(categoryName))
-                .isInstanceOf(IllegalTransactionStateException.class)
-                .hasMessage("No existing transaction found for transaction marked with propagation 'mandatory'");
-         }
-
+           .createIfNeedCategory(categoryName))
+           .isInstanceOf(IllegalTransactionStateException.class)
+            .hasMessage("No existing transaction found for transaction marked with propagation 'mandatory'");
+    }
 
     @Test
     void deleteCategoryWithNews() {
-
-        String categoryName = DataHelper.getAlphabeticString(10);
-        String categoryNameOther = DataHelper.getAlphabeticString(10);
-        CategoryCreateResponse testCategory = createCategory(categoryName);
+        final String categoryName = DataHelper.getAlphabeticString(10);
+        final CategoryCreateResponse testCategory = createCategory(categoryName);
         prepareNewsWithUsers(categoryName);
-        CategoryCreateResponse testCategoryOther = createCategory(categoryNameOther);
-
-        int countCategoryBefore = getEntriesCount("demo.categories");
-
-
-        CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
-        int countCategoryAfter = getEntriesCount("demo.categories");;
+        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
+        final int countCategoryAfter = getEntriesCount("demo.categories");
         assertThat(countCategoryBefore - countCategoryAfter)
                 .isOne();
         assertThat(categoryDto)
@@ -168,7 +146,4 @@ public class CategoryServiceTests extends TestBase{
         assertThat(categoryDto.name())
                 .isEqualTo(categoryName);
     }
-
-
-
 }

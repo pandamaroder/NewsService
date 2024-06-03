@@ -8,10 +8,10 @@ import org.junit.jupiter.api.Test;
 import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.*;
-
 
 public class BaseEntityTests extends TestBase {
 
@@ -25,18 +25,15 @@ public class BaseEntityTests extends TestBase {
         allEntities.forEach(this::assertThatNullableFieldsAreNotPrimitive);
     }
 
-
     @Test
     void testEntityIsCorrect() {
-
         Set<Category> entities = new HashSet<>();
-        Category entity1 = DataHelper.prepareCategory().build();
-        Category entity2 = Category.builder().name("test2").build();
+        final Category entity1 = DataHelper.prepareCategory().build();
+        final Category entity2 = Category.builder().name("test2").build();
         entities.add(entity1);
         entities.add(entity2);
         assertThatEntityIsCorrect(entities, categoryRepository);
     }
-
 }
 
 

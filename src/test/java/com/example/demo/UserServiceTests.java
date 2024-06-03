@@ -11,7 +11,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
 public class UserServiceTests extends TestBase {
 
     @Autowired
@@ -25,13 +24,12 @@ public class UserServiceTests extends TestBase {
 
     @Test
     void createUser() {
-
-        int countCategoryBefore = getEntriesCount("demo.users");
-        String userName = DataHelper.getAlphabeticString(10);
-        UserCreateResponse testUser = userService
+        final int countCategoryBefore = getEntriesCount("demo.users");
+        final String userName = DataHelper.getAlphabeticString(10);
+        final UserCreateResponse testUser = userService
                 .createUser(new UserCreateRequest(userName));
-        int countCategoryAfter = getEntriesCount("demo.users");
-        assertThat(countCategoryAfter-countCategoryBefore)
+        final int countCategoryAfter = getEntriesCount("demo.users");
+        assertThat(countCategoryAfter - countCategoryBefore)
                 .isOne();
 
         assertThat(testUser)
@@ -40,6 +38,5 @@ public class UserServiceTests extends TestBase {
                 .isPositive();
         assertThat(testUser.username())
                 .isEqualTo(userName);
-
     }
 }

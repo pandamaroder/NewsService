@@ -3,9 +3,7 @@ package com.example.demo;
 import com.example.demo.dto.NewsDto;
 import com.example.demo.dto.UserCreateRequest;
 import com.example.demo.dto.UserCreateResponse;
-import com.example.demo.helpers.DataHelper;
 import com.example.demo.model.BaseEntity;
-import com.example.demo.model.User;
 import com.example.demo.services.NewsService;
 import com.example.demo.services.UserService;
 import jakarta.annotation.Nonnull;
@@ -39,15 +37,14 @@ public abstract class TestBase {
     private UserService userService;
 
     protected int getEntriesCount(String tableName) {
-        String countRowsSql = String.format("SELECT COUNT(*) FROM %s", tableName);
-        Integer count = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
+        final String countRowsSql = String.format("SELECT COUNT(*) FROM %s", tableName);
+        final Integer count = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
         return count != null ? count : 0;
     }
 
     protected void prepareNewsWithUsers(String categoryName) {
-        User user = DataHelper.preparePetrPetrov();
-        UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
-        UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
+        final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
+        final UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
         NewsDto news = newsService.createNews(NewsDto.builder().title("test").content("test")
                 .userId(petrPetrov.userId()).categoryName(categoryName).build());
         NewsDto newsOther = newsService.createNews(NewsDto.builder().title("testOther").content("testOther")
@@ -56,36 +53,30 @@ public abstract class TestBase {
 
     protected <T> void assertThatNullableFieldsAreNotPrimitive(final Class<T> entityClass) {
         Arrays.stream(entityClass.getDeclaredFields())
-                .filter(field -> field.isAnnotationPresent(Column.class) &&
+                 .filter(field -> field.isAnnotationPresent(Column.class) &&
                         field.getAnnotation(Column.class).nullable()
                 )
-                .forEach(field -> assertThat(field.getType().isPrimitive())
+                 .forEach(field -> assertThat(field.getType().isPrimitive())
                         .withFailMessage(String.format("In %s field %s is primitive", entityClass.getName(), field.getName()))
-                        .isFalse()
-                );
+                        .isFalse());
     }
 
     @SuppressWarnings("ResultOfMethodCallIgnored")
     protected <T extends BaseEntity> void assertThatEntityIsCorrect(@Nonnull final Set<T> entities,
                                                                     @Nonnull final JpaRepository<T, Long> repository) {
         assertThat(entities)
-                .as("The size of the collection must be greater than or equal to two")
-                .hasSizeGreaterThanOrEqualTo(2);
-
-
+                 .as("The size of the collection must be greater than or equal to two")
+                 .hasSizeGreaterThanOrEqualTo(2);
 
         final List<T> saved = repository.saveAll(entities);
         assertThat(saved)
                 .hasSameSizeAs(entities);
 
-
         final List<T> result = repository.findAll();
         assertThat(result)
-                .hasSameSizeAs(entities);
+                 .hasSameSizeAs(entities);
         result.forEach(c -> assertThatNoException()
-                .as("Метод toString не должен генерировать ошибок")
-                .isThrownBy(c::toString)); // toString
+                 .as("Метод toString не должен генерировать ошибок")
+                 .isThrownBy(c::toString)); // toString
     }
-
-
 }

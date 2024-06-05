@@ -27,6 +27,7 @@ public class CategoryService {
         Category savedCategory = categoryRepository.save(category);
         return new CategoryCreateResponse(savedCategory.getId(), savedCategory.getName());
     }
+
     @Transactional(propagation = MANDATORY) // только в рамках существующей категории
     public Category createIfNeedCategory(String categoryName) {
         Optional<Category> categoryByName = categoryRepository.findByName(categoryName);

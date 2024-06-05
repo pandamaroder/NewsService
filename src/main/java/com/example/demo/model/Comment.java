@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -9,15 +8,14 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-
 @ToString
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name = "comments")
 public class Comment extends BaseEntity {
 

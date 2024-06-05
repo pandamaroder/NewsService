@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -8,7 +7,6 @@ import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.NaturalId;
 
 import java.util.List;
-
 
 @ToString
 @SuperBuilder

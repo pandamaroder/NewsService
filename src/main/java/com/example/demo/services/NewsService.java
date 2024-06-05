@@ -18,7 +18,6 @@ public class NewsService {
     private final UserRepository userRepository;
     private final CategoryService categoryService;
 
-
     @Transactional
     public NewsDto createNews(NewsDto newsDto) {
         Category categoryResponse = categoryService

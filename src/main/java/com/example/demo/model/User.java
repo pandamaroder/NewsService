@@ -8,7 +8,6 @@ import lombok.experimental.SuperBuilder;
 import java.util.List;
 import java.util.Objects;
 
-
 @ToString
 @SuperBuilder
 @NoArgsConstructor
@@ -19,7 +18,6 @@ import java.util.Objects;
 @Setter
 @Table(name = "users")
 public class User extends BaseEntity {
-
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;

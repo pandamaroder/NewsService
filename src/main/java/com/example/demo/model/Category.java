@@ -1,13 +1,11 @@
 package com.example.demo.model;
 
-
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
-
 
 @ToString
 @NoArgsConstructor
@@ -18,8 +16,7 @@ import java.util.List;
 @Setter
 @SuperBuilder
 @Table(name = "categories", schema = "demo")
-public class Category extends BaseEntity{
-
+public class Category extends BaseEntity {
 
     @Column(name = "name", nullable = false, unique = true)
     private String name;
@@ -27,5 +24,4 @@ public class Category extends BaseEntity{
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
     @ToString.Exclude
     private List<News> newsList;
-
 }

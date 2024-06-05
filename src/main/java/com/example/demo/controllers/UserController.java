@@ -3,7 +3,6 @@ package com.example.demo.controllers;
 import com.example.demo.dto.UserCreateRequest;
 import com.example.demo.dto.UserCreateResponse;
 import com.example.demo.dto.UserDto;
-import com.example.demo.model.User;
 import com.example.demo.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -30,7 +29,7 @@ public class UserController {
     public ResponseEntity<UserDto> deleteUser(@PathVariable("id") int id) {
         UserDto deletedUser = userService.deleteUser(id);
         return new ResponseEntity<>(deletedUser, HttpStatus.CREATED);
-       // ResponseEntity.ok(deletedUser.getId())
+        // ResponseEntity.ok(deletedUser.getId())
     }
 
 }

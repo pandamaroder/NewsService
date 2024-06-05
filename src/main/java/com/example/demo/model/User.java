@@ -4,12 +4,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Comments;
-import org.hibernate.annotations.NaturalId;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 
 @ToString
@@ -21,7 +18,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
 
     @Column(name = "username", nullable = false, unique = true)

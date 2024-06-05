@@ -1,9 +1,8 @@
 package com.example.demo.services;
-import com.example.demo.dto.*;
-import com.example.demo.exceptions.NotFoundException;
+
+import com.example.demo.dto.NewsDto;
 import com.example.demo.model.Category;
 import com.example.demo.model.News;
-import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.repositories.NewsRepository;
 import com.example.demo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,18 +20,18 @@ public class NewsService {
 
 
     @Transactional
-   public NewsDto createNews(NewsDto newsDto) {
-       Category categoryResponse = categoryService
-               .createIfNeedCategory(newsDto.getCategoryName());
+    public NewsDto createNews(NewsDto newsDto) {
+        Category categoryResponse = categoryService
+                .createIfNeedCategory(newsDto.getCategoryName());
 
-       News news = News.builder()
-               .title(newsDto.getTitle())
-               .content(newsDto.getContent())
-               //пытаемся понять по id - возвращает прокси объект
-               .user(userRepository
-                       .getReferenceById(newsDto.getUserId()))
-               .category(categoryResponse)
-               .build();
+        News news = News.builder()
+                .title(newsDto.getTitle())
+                .content(newsDto.getContent())
+                //пытаемся понять по id - возвращает прокси объект
+                .user(userRepository
+                        .getReferenceById(newsDto.getUserId()))
+                .category(categoryResponse)
+                .build();
 
         News savedNews = newsRepository.save(news);
         return NewsDto.builder().id(savedNews.getId()).categoryName(newsDto.getCategoryName())
@@ -40,12 +39,12 @@ public class NewsService {
                 .title(newsDto.getTitle())
                 .userId(newsDto.getUserId()).build();
 
-   }
+    }
 
     @Transactional
     public NewsDto deleteNews(long newsId) {
         //TODO при удалении новости -> каскадное удаление всех связанных комментариев
-      return null;
+        return null;
     }
 
 }

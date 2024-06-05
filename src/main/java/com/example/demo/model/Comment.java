@@ -1,13 +1,13 @@
 package com.example.demo.model;
 
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
-
-import java.util.Set;
-
 
 
 @ToString
@@ -19,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Table(name = "comments")
-public class Comment extends BaseEntity{
+public class Comment extends BaseEntity {
 
     private String text;
 
@@ -32,7 +32,6 @@ public class Comment extends BaseEntity{
     @JoinColumn(name = "news_id")
     @ToString.Exclude
     News news;
-
 
 
 }

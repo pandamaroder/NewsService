@@ -184,7 +184,7 @@ class CategoryServiceTests extends TestBase {
                 .isZero();
 
         assertThat(countCommentsBefore)
-                .isGreaterThan(0);
+                .isPositive();
         assertThat(countCommentsAfter)
                 .isZero();
 

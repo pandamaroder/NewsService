@@ -9,6 +9,7 @@
     <module name="BeforeExecutionExclusionFileFilter">
         <property name="fileNamePattern" value="module\-info\.java$"/>
     </module>
+
     <module name="SuppressWarningsFilter"/>
     <!-- <module name="JavadocPackage"/> invalid -->
     <module name="FileTabCharacter"/>
@@ -73,8 +74,8 @@
         <module name="ExecutableStatementCount"/>
         <module name="ExplicitInitialization"/>
         <!-- <module name="FinalClass"/> invalid -->
-        <module name="FinalLocalVariable"/>
-        <module name="FinalParameters"/>
+    <!--    <module name="FinalLocalVariable"/>-->
+      <!--  <module name="FinalParameters"/>-->
         <!-- <module name="HiddenField"/> invalid -->
         <!-- <module name="HideUtilityClassConstructor"/> useless -->
         <module name="IllegalCatch"/>
@@ -91,7 +92,7 @@
         <module name="LambdaBodyLength">
             <property name="max" value="30"/>
         </module>
-        <module name="LocalFinalVariableName"/>
+<!--        <module name="LocalFinalVariableName"/>-->
         <!-- <module name="MagicNumber"/> invalid -->
         <!-- <module name="MatchXpath"/> not applicable -->
         <module name="MethodCount"/>

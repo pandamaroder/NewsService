@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-
 @Getter
 @MappedSuperclass
 @NoArgsConstructor
@@ -16,7 +15,7 @@ public abstract class BaseEntity {
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-/*    @Column(name = "created_at", nullable = false, insertable = true, updatable = false)
+   /* @Column(name = "created_at", nullable = false, insertable = true, updatable = false)
     private LocalDateTime createdAt;
     @Column(name = "updated_at", insertable = false, updatable = true)
     private LocalDateTime updatedAt;*/

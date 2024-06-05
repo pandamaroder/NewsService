@@ -7,13 +7,11 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class NewsCreateRequest {
 
-
     private String title;
+
     private String content;
 
-
     private long userId;
-
 
     private String categoryName;
 }

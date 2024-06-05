@@ -9,9 +9,7 @@ public class CommentCreateRequest {
 
     private String text;
 
-
     private long userId;
-
 
     private long newsId;
 }

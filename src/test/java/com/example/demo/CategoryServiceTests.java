@@ -35,8 +35,7 @@ class CategoryServiceTests extends TestBase {
 
     @Autowired
     private NewsService newsService;
-    static final String TABLE_NAME_CATEGORIES = "demo.categories";
-    
+
 
     private CategoryCreateResponse createCategory(final String categoryName) {
         return categoryService
@@ -136,9 +135,12 @@ class CategoryServiceTests extends TestBase {
         final String categoryName = DataHelper.getAlphabeticString(10);
         final CategoryCreateResponse testCategory = createCategory(categoryName);
         prepareNewsWithUsers(categoryName);
+        final int countNewsBefore = getEntriesCount(TABLE_NAME_NEWS);
         final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
         final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
         final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
+        final int countNewsAfter = getEntriesCount(TABLE_NAME_NEWS);
+
         assertThat(countCategoryBefore - countCategoryAfter)
                 .isOne();
         assertThat(categoryDto)
@@ -147,5 +149,44 @@ class CategoryServiceTests extends TestBase {
                 .isPositive();
         assertThat(categoryDto.name())
                 .isEqualTo(categoryName);
+
+        assertThat(countNewsBefore)
+                .isEqualTo(2);
+        assertThat(countNewsAfter)
+                .isZero();
+
+    }
+
+    @Test
+    void deleteCategoryWithNewsAndComments() {
+        final String categoryName = DataHelper.getAlphabeticString(10);
+        final CategoryCreateResponse testCategory = createCategory(categoryName);
+        prepareNewsWithUsersAndComments(categoryName);
+        final int countCommentsBefore = getEntriesCount(TABLE_NAME_COMMENTS);
+        final int countNewsBefore = getEntriesCount(TABLE_NAME_NEWS);
+        final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
+        final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
+        final int countNewsAfter = getEntriesCount(TABLE_NAME_NEWS);
+        final int countCommentsAfter = getEntriesCount(TABLE_NAME_COMMENTS);
+        assertThat(countCategoryBefore - countCategoryAfter)
+                .isOne();
+        assertThat(categoryDto)
+                .isNotNull();
+        assertThat(categoryDto.id())
+                .isPositive();
+        assertThat(categoryDto.name())
+                .isEqualTo(categoryName);
+
+        assertThat(countNewsBefore)
+                .isEqualTo(2);
+        assertThat(countNewsAfter)
+                .isZero();
+
+        assertThat(countCommentsBefore)
+                .isGreaterThan(0);
+        assertThat(countCommentsAfter)
+                .isZero();
+
     }
 }

@@ -30,12 +30,13 @@ class NewsServiceTests extends TestBase {
     private CategoryRepository categoryRepository;
 
 
+
     @Test
     void createNews() {
         final UserCreateResponse testUser = userService.createUser(new UserCreateRequest("TestUser"));
 
-        final int countCategoryBefore = getEntriesCount("demo.categories");
-        final  int countNewsBefore = getEntriesCount("demo.news");
+        final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
+        final  int countNewsBefore = getEntriesCount(TABLE_NAME_NEWS);
 
         final  String categoryName = DataHelper.getAlphabeticString(10);
         final NewsDto newsDto = NewsDto.builder().categoryName(categoryName).content(categoryName)
@@ -44,8 +45,8 @@ class NewsServiceTests extends TestBase {
 
         final NewsDto news = newsService.createNews(newsDto);
 
-        final  int  countCategoryAfter = getEntriesCount("demo.categories");
-        final int  countNewsAfter = getEntriesCount("demo.news");
+        final  int  countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
+        final int  countNewsAfter = getEntriesCount(TABLE_NAME_NEWS);
 
 
         assertThat(countCategoryAfter - countCategoryBefore)

@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -19,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "comments")
 public class Comment extends BaseEntity {
 
+    @Column(name = "text", nullable = false, unique = true)
     private String text;
 
     @ManyToOne

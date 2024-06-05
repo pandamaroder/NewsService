@@ -24,11 +24,11 @@ class UserServiceTests extends TestBase {
 
     @Test
     void createUser() {
-        final int countCategoryBefore = getEntriesCount("demo.users");
+        final int countCategoryBefore = getEntriesCount(TABLE_NAME_USERS);
         final String userName = DataHelper.getAlphabeticString(10);
         final UserCreateResponse testUser = userService
                 .createUser(new UserCreateRequest(userName));
-        final int countCategoryAfter = getEntriesCount("demo.users");
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_USERS);
         assertThat(countCategoryAfter - countCategoryBefore)
                 .isOne();
 

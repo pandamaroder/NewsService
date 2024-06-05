@@ -27,9 +27,12 @@ public class UserService {
 
     @Transactional
     public UserDto deleteUser(long userId) {
-        //TODO при удалении юзера - удалять все связанные комментарии!!!!
+
         User user = userRepository.getById(userId);
         userRepository.delete(user);
-        return UserDto.builder().username(user.getUsername()).id(user.getId()).build();
+        return UserDto.builder()
+                .username(user.getUsername())
+                .id(user.getId())
+                .build();
     }
 }

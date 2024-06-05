@@ -36,18 +36,18 @@ public abstract class TestBase {
     @Autowired
     private UserService userService;
 
-    protected int getEntriesCount(String tableName) {
+    protected int getEntriesCount(final String tableName) {
         final String countRowsSql = String.format("SELECT COUNT(*) FROM %s", tableName);
         final Integer count = jdbcTemplate.queryForObject(countRowsSql, Integer.class);
         return count != null ? count : 0;
     }
 
-    protected void prepareNewsWithUsers(String categoryName) {
+    protected void prepareNewsWithUsers(final String categoryName) {
         final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
         final UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
-        NewsDto news = newsService.createNews(NewsDto.builder().title("test").content("test")
+        final NewsDto news = newsService.createNews(NewsDto.builder().title("test").content("test")
                 .userId(petrPetrov.userId()).categoryName(categoryName).build());
-        NewsDto newsOther = newsService.createNews(NewsDto.builder().title("testOther").content("testOther")
+        final NewsDto newsOther = newsService.createNews(NewsDto.builder().title("testOther").content("testOther")
                 .userId(userOther.userId()).categoryName(categoryName).build());
     }
 

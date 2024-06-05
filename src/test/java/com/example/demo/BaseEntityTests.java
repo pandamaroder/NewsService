@@ -13,7 +13,7 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BaseEntityTests extends TestBase {
+class BaseEntityTests extends TestBase {
 
     @Autowired
     private CategoryRepository categoryRepository;
@@ -27,7 +27,7 @@ public class BaseEntityTests extends TestBase {
 
     @Test
     void testEntityIsCorrect() {
-        Set<Category> entities = new HashSet<>();
+        final Set<Category> entities = new HashSet<>();
         final Category entity1 = DataHelper.prepareCategory().build();
         final Category entity2 = Category.builder().name("test2").build();
         entities.add(entity1);

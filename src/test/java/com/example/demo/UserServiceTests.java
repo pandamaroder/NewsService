@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class UserServiceTests extends TestBase {
+class UserServiceTests extends TestBase {
 
     @Autowired
     private CategoryService categoryService;

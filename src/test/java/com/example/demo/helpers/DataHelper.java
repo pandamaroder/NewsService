@@ -8,34 +8,30 @@ import java.util.Random;
 
 public class DataHelper {
 
-    public static String getAlphabeticString(int targetStringLength) {
+    public static String getAlphabeticString(final int targetStringLength) {
         final int leftLimit = 97; // letter 'a'
         final int rightLimit = 122; // letter 'z'
-        final Random random = new Random();
-
-        return random.ints(leftLimit, rightLimit + 1)
+        return new Random().ints(leftLimit, rightLimit + 1)
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
     }
 
-    public static String getNumeric(int targetStringLength) {
-        final Random random = new Random();
+    public static String getNumeric(final int targetStringLength) {
         if (targetStringLength < 1) {
             throw new IllegalArgumentException("Wrong");
         }
 
-        return "+" + random.nextInt((int) Math.pow(10, targetStringLength - 1),
+        return "+" + new Random().nextInt((int) Math.pow(10, targetStringLength - 1),
                 (int) Math.pow(10, targetStringLength) - 1);
     }
 
-    public static Integer getNumber(int targetStringLength) {
-        final Random random = new Random();
+    public static Integer getNumber(final int targetStringLength) {
         if (targetStringLength < 1) {
             throw new IllegalArgumentException("Wrong");
         }
 
-        return random.nextInt((int) Math.pow(10, targetStringLength - 1),
+        return new Random().nextInt((int) Math.pow(10, targetStringLength - 1),
                 (int) Math.pow(10, targetStringLength) - 1);
     }
 

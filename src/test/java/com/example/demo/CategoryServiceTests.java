@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.UUID;
 
-public class CategoryServiceTests extends TestBase {
+class CategoryServiceTests extends TestBase {
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -35,8 +35,10 @@ public class CategoryServiceTests extends TestBase {
 
     @Autowired
     private NewsService newsService;
+    static final String TABLE_NAME_CATEGORIES = "demo.categories";
+    
 
-    private CategoryCreateResponse createCategory(String categoryName) {
+    private CategoryCreateResponse createCategory(final String categoryName) {
         return categoryService
                 .createCategory(new CategoryCreateRequest(categoryName));
     }
@@ -45,9 +47,9 @@ public class CategoryServiceTests extends TestBase {
     void createNewCategory() {
         final String categoryName = DataHelper.getAlphabeticString(10);
 
-        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
         final CategoryCreateResponse testCategory = createCategory(categoryName);
-        final int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
 
         assertThat(countCategoryAfter - countCategoryBefore)
                 .isOne();
@@ -66,9 +68,9 @@ public class CategoryServiceTests extends TestBase {
         createCategory(DataHelper.getAlphabeticString(10));
         final CategoryCreateResponse testCategory = createCategory(name);
 
-        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
         final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
-        final int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
 
         assertThat(countCategoryBefore - countCategoryAfter)
                 .isOne();
@@ -83,12 +85,12 @@ public class CategoryServiceTests extends TestBase {
     @Test
     void updateCategory() {
         final CategoryCreateResponse testCategory = createCategory(DataHelper.getAlphabeticString(10));
-
-        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount(
+                TABLE_NAME_CATEGORIES);
         final String updatedCategoryName = DataHelper.getAlphabeticString(5);
         final CategoryDto updatedCategory = new CategoryDto(testCategory.id(), updatedCategoryName);
         final CategoryDto categoryDtoAfterUpdate = categoryService.updateCategory(updatedCategory);
-        final int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
 
         assertThat(countCategoryAfter - countCategoryBefore)
                 .isZero();
@@ -134,9 +136,9 @@ public class CategoryServiceTests extends TestBase {
         final String categoryName = DataHelper.getAlphabeticString(10);
         final CategoryCreateResponse testCategory = createCategory(categoryName);
         prepareNewsWithUsers(categoryName);
-        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
         final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
-        final int countCategoryAfter = getEntriesCount("demo.categories");
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
         assertThat(countCategoryBefore - countCategoryAfter)
                 .isOne();
         assertThat(categoryDto)

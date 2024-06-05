@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Testcontainers
 @SpringBootTest
 @ActiveProfiles("test")
-public class NewsServiceTests extends TestBase {
+class NewsServiceTests extends TestBase {
 
     @Autowired
     private UserService userService;
@@ -32,20 +32,20 @@ public class NewsServiceTests extends TestBase {
 
     @Test
     void createNews() {
-        UserCreateResponse testUser = userService.createUser(new UserCreateRequest("TestUser"));
+        final UserCreateResponse testUser = userService.createUser(new UserCreateRequest("TestUser"));
 
-        int countCategoryBefore = getEntriesCount("demo.categories");
-        Integer countNewsBefore = getEntriesCount("demo.news");
+        final int countCategoryBefore = getEntriesCount("demo.categories");
+        final  int countNewsBefore = getEntriesCount("demo.news");
 
-        String categoryName = DataHelper.getAlphabeticString(10);
-        NewsDto newsDto = NewsDto.builder().categoryName(categoryName).content(categoryName)
+        final  String categoryName = DataHelper.getAlphabeticString(10);
+        final NewsDto newsDto = NewsDto.builder().categoryName(categoryName).content(categoryName)
                 .title("testTitle")
                 .userId(testUser.userId()).build();
 
-        NewsDto news = newsService.createNews(newsDto);
+        final NewsDto news = newsService.createNews(newsDto);
 
-        Integer countCategoryAfter = getEntriesCount("demo.categories");
-        Integer countNewsAfter = getEntriesCount("demo.news");
+        final  int  countCategoryAfter = getEntriesCount("demo.categories");
+        final int  countNewsAfter = getEntriesCount("demo.news");
 
 
         assertThat(countCategoryAfter - countCategoryBefore)

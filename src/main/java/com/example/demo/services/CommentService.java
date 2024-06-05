@@ -34,7 +34,7 @@ public class CommentService {
                 .news(newsToAdjust)
                 .user(userToAdjust)
                 .text(commentDto.getText()).build();
-        Comment savedComment = commentRepository.save(comment);
+        commentRepository.save(comment);
         return commentDto;
     }
 

@@ -30,10 +30,7 @@ public class CommentService {
     public CommentDto createComment(CommentDto commentDto) {
         User userToAdjust = userRepository.getReferenceById(commentDto.getUserId());
         News newsToAdjust = newsRepository.getReferenceById(commentDto.getNewsId());
-        Comment comment = com.example.demo.model.Comment.builder()
-                .news(newsToAdjust)
-                .user(userToAdjust)
-                .text(commentDto.getText()).build();
+        Comment comment = com.example.demo.model.Comment.builder().news(newsToAdjust).user(userToAdjust).text(commentDto.getText()).build();
         commentRepository.save(comment);
         return commentDto;
     }
@@ -43,10 +40,6 @@ public class CommentService {
 
         Comment comment = commentRepository.getById(userId);
 
-        return CommentDto.builder().userId(comment.getUser().getId())
-                .newsId(comment.getNews().getId())
-                .text(comment.getText())
-                .id(comment.getId())
-                .build();
+        return CommentDto.builder().userId(comment.getUser().getId()).newsId(comment.getNews().getId()).text(comment.getText()).id(comment.getId()).build();
     }
 }

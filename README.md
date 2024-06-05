@@ -9,9 +9,9 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=pandamaroder_ContactRegistry&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=pandamaroder_ContactRegistry)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pandamaroder_ContactRegistry&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pandamaroder_ContactRegistry)
 
-MVC сервис для приложения «Контакты 2.0»
+MVC сервис для приложения «Новостной сервис»
 
-**Технологии:** Java, Spring Boot, Postgres
+**Технологии:** Java, Spring Boot, Postgress, Spring Data
 
 # Первичная установка
 

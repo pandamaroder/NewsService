@@ -34,15 +34,14 @@ public class CategoryService {
             return categoryByName.get();
         }
         Category category = Category.builder().name(categoryName).build();
-        Category savedCategory = categoryRepository.save(category);
-        return savedCategory;
+        return categoryRepository.save(category);
     }
 
     @Transactional
     public CategoryDto deleteCategory(long categoryId) {
         Category category = categoryRepository
                 .findById(categoryId)
-                .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));;
+                .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
         categoryRepository.delete(category);
         return new CategoryDto(category.getId(), category.getName());
     }

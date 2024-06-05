@@ -1,22 +1,16 @@
 package com.example.demo.services;
-import com.example.demo.dto.*;
-import com.example.demo.dto.CommentCreateResponse;
-import com.example.demo.exceptions.NotFoundException;
+
+import com.example.demo.dto.CommentDto;
 import com.example.demo.model.Comment;
 import com.example.demo.model.News;
 import com.example.demo.model.User;
 import com.example.demo.repositories.CommentRepository;
-
 import com.example.demo.repositories.NewsRepository;
 import com.example.demo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Optional;
-
-import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +28,7 @@ public class CommentService {
 
     @Transactional
     public CommentDto createComment(CommentDto commentDto) {
-        User userToAdjust =  userRepository.getReferenceById(commentDto.getUserId());
+        User userToAdjust = userRepository.getReferenceById(commentDto.getUserId());
         News newsToAdjust = newsRepository.getReferenceById(commentDto.getNewsId());
         Comment comment = com.example.demo.model.Comment.builder()
                 .news(newsToAdjust)

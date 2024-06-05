@@ -30,7 +30,7 @@ public class CommentService {
     public CommentDto createComment(CommentDto commentDto) {
         User userToAdjust = userRepository.getReferenceById(commentDto.getUserId());
         News newsToAdjust = newsRepository.getReferenceById(commentDto.getNewsId());
-        Comment comment = com.example.demo.model.Comment.builder().news(newsToAdjust).user(userToAdjust).text(commentDto.getText()).build();
+        Comment comment = Comment.builder().news(newsToAdjust).user(userToAdjust).text(commentDto.getText()).build();
         commentRepository.save(comment);
         return commentDto;
     }

@@ -1,4 +1,13 @@
+
+
 # О проекте:
+
+[![Java CI](https://github.com/pandamaroder/ContactRegistry/actions/workflows/github-actions-demo.yml/badge.svg)](https://github.com/pandamaroder/ContactRegistry/actions/workflows/github-actions-demo.yml)
+[![codecov](https://codecov.io/gh/pandamaroder/ContactRegistry/graph/badge.svg?token=9KNR2SQ3QI)](https://codecov.io/gh/pandamaroder/ContactRegistry)
+
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=pandamaroder_ContactRegistry&metric=bugs)](https://sonarcloud.io/summary/new_code?id=pandamaroder_ContactRegistry)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=pandamaroder_ContactRegistry&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=pandamaroder_ContactRegistry)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=pandamaroder_ContactRegistry&metric=coverage)](https://sonarcloud.io/summary/new_code?id=pandamaroder_ContactRegistry)
 
 MVC сервис для приложения «Контакты 2.0»
 

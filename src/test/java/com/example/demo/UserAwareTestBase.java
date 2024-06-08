@@ -27,8 +27,8 @@ public abstract class UserAwareTestBase extends TestBase {
     private CommentService commentservice;
 
     protected void prepareNewsWithUsers(final String categoryName) {
-        final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
-        final UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
+        final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Zaichikov"));
+        final UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Belkin"));
         newsService.createNews(NewsDto.builder().title("test").content("test")
             .userId(petrPetrov.userId()).categoryName(categoryName).build());
         newsService.createNews(NewsDto.builder().title("testOther").content("testOther")
@@ -39,24 +39,24 @@ public abstract class UserAwareTestBase extends TestBase {
         final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
         final UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
         NewsDto news = newsService.createNews(NewsDto.builder().title("test").content("test")
-                .userId(petrPetrov.userId()).categoryName(categoryName).build());
+            .userId(petrPetrov.userId()).categoryName(categoryName).build());
         NewsDto news1 = newsService.createNews(NewsDto.builder().title("testOther").content("testOther")
-                .userId(userOther.userId()).categoryName(categoryName).build());
+            .userId(userOther.userId()).categoryName(categoryName).build());
         CommentDto commentDto = CommentDto.builder().newsId(news.getId())
-                .userId(petrPetrov.userId())
-                .text("Comment#1").build();
+            .userId(petrPetrov.userId())
+            .text("Comment#1").build();
 
         CommentDto commentDto2 = CommentDto.builder().newsId(news.getId())
-                .userId(petrPetrov.userId())
-                .text("Comment#2").build();
+            .userId(petrPetrov.userId())
+            .text("Comment#2").build();
 
         CommentDto commentDto3 = CommentDto.builder().newsId(news1.getId())
-                .userId(petrPetrov.userId())
-                .text("Comment#3").build();
+            .userId(petrPetrov.userId())
+            .text("Comment#3").build();
 
         CommentDto commentDto4 = CommentDto.builder().newsId(news1.getId())
-                .userId(userOther.userId())
-                .text("Comment#4").build();
+            .userId(userOther.userId())
+            .text("Comment#4").build();
         commentservice.createComment(commentDto);
         commentservice.createComment(commentDto2);
         commentservice.createComment(commentDto3);

@@ -21,6 +21,7 @@
         <exclude name="ShortVariable"/>
         <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
+        <exclude name="PrematureDeclaration"/>
     </rule>
 
 

@@ -59,6 +59,7 @@ dependencies {
         disable("StringSplitter", "ImmutableEnumChecker", "FutureReturnValueIgnored", "EqualsIncompatibleType", "TruthSelfEquals", "Slf4jLoggerShouldBeNonStatic", "Slf4jSignOnlyFormat")
     }
 }*/
+
 tasks {
 
 	test {

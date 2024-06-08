@@ -1,10 +1,8 @@
 package com.example.demo;
 
-import com.example.demo.repositories.CategoryRepository;
 import jakarta.persistence.Entity;
 import org.junit.jupiter.api.Test;
 import org.reflections.Reflections;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
@@ -22,7 +20,7 @@ class BaseEntityTests extends TestBase {
         allEntities.forEach(this::assertThatNullableFieldsAreNotPrimitive);
     }
 
-/*    @Test
+    /* @Test
     void testEntityIsCorrect() {
         final Set<Category> entities = new HashSet<>();
         final Category entity1 = DataHelper.prepareCategory().build();

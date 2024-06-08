@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -35,6 +37,7 @@ public class CommentService {
         Comment comment = Comment.builder()
                 .news(newsToAdjust)
                 .user(userToAdjust)
+                .createdAt(LocalDateTime.now())
                 .text(commentDto.getText())
                 .build();
         commentRepository.save(comment);

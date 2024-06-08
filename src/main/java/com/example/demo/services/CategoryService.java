@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
@@ -23,7 +24,10 @@ public class CategoryService {
 
     @Transactional
     public CategoryCreateResponse createCategory(CategoryCreateRequest request) {
-        Category category = Category.builder().name(request.name()).build();
+        Category category = Category.builder()
+            .name(request.name())
+            .createdAt(LocalDateTime.now())
+            .build();
         Category savedCategory = categoryRepository.save(category);
         return new CategoryCreateResponse(savedCategory.getId(), savedCategory.getName());
     }
@@ -34,15 +38,18 @@ public class CategoryService {
         if (categoryByName.isPresent()) {
             return categoryByName.get();
         }
-        Category category = Category.builder().name(categoryName).build();
+        Category category = Category.builder()
+            .name(categoryName)
+            .createdAt(LocalDateTime.now())
+            .build();
         return categoryRepository.save(category);
     }
 
     @Transactional
     public CategoryDto deleteCategory(long categoryId) {
         Category category = categoryRepository
-                .findById(categoryId)
-                .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
+            .findById(categoryId)
+            .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
         categoryRepository.delete(category);
         return new CategoryDto(category.getId(), category.getName());
     }
@@ -51,8 +58,8 @@ public class CategoryService {
     public CategoryDto updateCategory(CategoryDto categoryDto) {
 
         Category categoryToUpdate = categoryRepository
-                .findById(categoryDto.id())
-                .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
+            .findById(categoryDto.id())
+            .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
         categoryToUpdate.setName(categoryDto.name());
         categoryRepository.save(categoryToUpdate);
         return new CategoryDto(categoryToUpdate.getId(), categoryToUpdate.getName());

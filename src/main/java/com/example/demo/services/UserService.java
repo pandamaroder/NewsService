@@ -6,9 +6,10 @@ import com.example.demo.dto.UserDto;
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-//import org.mapstruct.control.MappingControl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
@@ -20,7 +21,10 @@ public class UserService {
     @Transactional
     public UserCreateResponse createUser(UserCreateRequest userCreateRequest) {
 
-        User user = User.builder().username(userCreateRequest.username()).build();
+        User user = User.builder()
+            .username(userCreateRequest.username())
+            .createdAt(LocalDateTime.now())
+            .build();
         User savedUser = userRepository.save(user);
         return new UserCreateResponse(savedUser.getId(), savedUser.getUsername());
     }
@@ -31,8 +35,8 @@ public class UserService {
         User user = userRepository.getById(userId);
         userRepository.delete(user);
         return UserDto.builder()
-                .username(user.getUsername())
-                .id(user.getId())
-                .build();
+            .username(user.getUsername())
+            .id(user.getId())
+            .build();
     }
 }

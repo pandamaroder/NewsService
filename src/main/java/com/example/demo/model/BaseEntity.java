@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
@@ -23,8 +24,10 @@ public abstract class BaseEntity {
     private Long id;
 
     @Column(name = "created_at", nullable = false, insertable = true, updatable = false)
+    @ToString.Exclude
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at", insertable = false, updatable = true)
+    @ToString.Exclude
     private LocalDateTime updatedAt;
 }

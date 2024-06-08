@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -21,22 +23,23 @@ public class NewsService {
     @Transactional
     public NewsDto createNews(NewsDto newsDto) {
         Category categoryResponse = categoryService
-                .createIfNeedCategory(newsDto.getCategoryName());
+            .createIfNeedCategory(newsDto.getCategoryName());
 
         News news = News.builder()
-                .title(newsDto.getTitle())
-                .content(newsDto.getContent())
-                //пытаемся понять по id - возвращает прокси объект
-                .user(userRepository
-                        .getReferenceById(newsDto.getUserId()))
-                .category(categoryResponse)
-                .build();
+            .title(newsDto.getTitle())
+            .content(newsDto.getContent())
+            //пытаемся понять по id - возвращает прокси объект
+            .user(userRepository
+                .getReferenceById(newsDto.getUserId()))
+            .createdAt(LocalDateTime.now())
+            .category(categoryResponse)
+            .build();
 
         News savedNews = newsRepository.save(news);
         return NewsDto.builder().id(savedNews.getId()).categoryName(newsDto.getCategoryName())
-                .content(newsDto.getContent())
-                .title(newsDto.getTitle())
-                .userId(newsDto.getUserId()).build();
+            .content(newsDto.getContent())
+            .title(newsDto.getTitle())
+            .userId(newsDto.getUserId()).build();
 
     }
 

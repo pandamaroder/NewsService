@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +32,7 @@ public class NewsService {
             //пытаемся понять по id - возвращает прокси объект
             .user(userRepository
                 .getReferenceById(newsDto.getUserId()))
-            .createdAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
             .category(categoryResponse)
             .build();
 

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Optional;
 
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
@@ -26,7 +27,7 @@ public class CategoryService {
     public CategoryCreateResponse createCategory(CategoryCreateRequest request) {
         Category category = Category.builder()
             .name(request.name())
-            .createdAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
             .build();
         Category savedCategory = categoryRepository.save(category);
         return new CategoryCreateResponse(savedCategory.getId(), savedCategory.getName());
@@ -40,7 +41,7 @@ public class CategoryService {
         }
         Category category = Category.builder()
             .name(categoryName)
-            .createdAt(LocalDateTime.now())
+            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
             .build();
         return categoryRepository.save(category);
     }

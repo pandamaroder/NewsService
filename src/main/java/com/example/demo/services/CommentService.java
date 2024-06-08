@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +38,7 @@ public class CommentService {
         Comment comment = Comment.builder()
                 .news(newsToAdjust)
                 .user(userToAdjust)
-                .createdAt(LocalDateTime.now())
+                .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
                 .text(commentDto.getText())
                 .build();
         commentRepository.save(comment);

@@ -7,19 +7,18 @@ import com.example.demo.helpers.DataHelper;
 import com.example.demo.model.Category;
 import com.example.demo.repositories.CategoryRepository;
 import com.example.demo.services.CategoryService;
-import com.example.demo.services.NewsService;
 import com.example.demo.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.IllegalTransactionStateException;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import java.util.UUID;
-
-class CategoryServiceTests extends TestBase {
+class CategoryServiceTests extends UserAwareTestBase {
 
     @Autowired
     private TransactionTemplate transactionTemplate;
@@ -29,18 +28,6 @@ class CategoryServiceTests extends TestBase {
 
     @Autowired
     private CategoryRepository categoryRepository;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private NewsService newsService;
-
-
-    private CategoryCreateResponse createCategory(final String categoryName) {
-        return categoryService
-                .createCategory(new CategoryCreateRequest(categoryName));
-    }
 
     @Test
     void createNewCategory() {
@@ -65,12 +52,15 @@ class CategoryServiceTests extends TestBase {
     void deleteCategory() {
         final String name = UUID.randomUUID().toString();
         createCategory(DataHelper.getAlphabeticString(10));
+        createCategory(DataHelper.getAlphabeticString(10));
         final CategoryCreateResponse testCategory = createCategory(name);
 
         final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
         final CategoryDto categoryDto = categoryService.deleteCategory(testCategory.id());
         final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
-
+        assertThat(countCategoryBefore)
+                .as("Verification that there are some entities before deletion in the table")
+                .isGreaterThan(1);
         assertThat(countCategoryBefore - countCategoryAfter)
                 .isOne();
         assertThat(categoryDto)
@@ -106,10 +96,10 @@ class CategoryServiceTests extends TestBase {
         final String categoryName = "testCategory";
         assertThat(categoryRepository.findByName(categoryName))
                 .isNotPresent();
-
-        final Category category = transactionTemplate.execute(status -> {
-            return categoryService.createIfNeedCategory(categoryName);
-        });
+        //TODO на 22 рефактор
+        final Category category = transactionTemplate.execute(status ->
+                categoryService.createIfNeedCategory(categoryName)
+        );
         assertThat(categoryRepository.findByName(categoryName))
                 .isNotNull();
         assertThat(category)
@@ -125,9 +115,9 @@ class CategoryServiceTests extends TestBase {
         final String categoryName = "testCategoryNoTransaction";
 
         assertThatThrownBy(() -> categoryService
-           .createIfNeedCategory(categoryName))
-           .isInstanceOf(IllegalTransactionStateException.class)
-            .hasMessage("No existing transaction found for transaction marked with propagation 'mandatory'");
+                .createIfNeedCategory(categoryName))
+                .isInstanceOf(IllegalTransactionStateException.class)
+                .hasMessage("No existing transaction found for transaction marked with propagation 'mandatory'");
     }
 
     @Test
@@ -187,6 +177,10 @@ class CategoryServiceTests extends TestBase {
                 .isPositive();
         assertThat(countCommentsAfter)
                 .isZero();
+    }
 
+    private CategoryCreateResponse createCategory(final String categoryName) {
+        return categoryService
+                .createCategory(new CategoryCreateRequest(categoryName));
     }
 }

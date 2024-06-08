@@ -32,7 +32,11 @@ public class CommentService {
     public CommentDto createComment(CommentDto commentDto) {
         User userToAdjust = userRepository.getReferenceById(commentDto.getUserId());
         News newsToAdjust = newsRepository.getReferenceById(commentDto.getNewsId());
-        Comment comment = Comment.builder().news(newsToAdjust).user(userToAdjust).text(commentDto.getText()).build();
+        Comment comment = Comment.builder()
+                .news(newsToAdjust)
+                .user(userToAdjust)
+                .text(commentDto.getText())
+                .build();
         commentRepository.save(comment);
         return commentDto;
     }
@@ -52,7 +56,7 @@ public class CommentService {
 
     @Transactional
     public CommentDto updateComment(CommentCreateDto commentCreateDto) {
-
+        //TODO комментарии редактировать по счетчику
         Comment commentToUpdate = commentRepository
                 .findById(commentCreateDto.id())
                 .orElseThrow(() -> new NotFoundException("Комментария с таким ID не существует"));

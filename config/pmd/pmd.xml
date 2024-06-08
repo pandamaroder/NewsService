@@ -12,7 +12,7 @@
     </rule>-->
 
 
-  <!--  <rule ref="category/java/codestyle.xml">
+    <rule ref="category/java/codestyle.xml">
         <exclude name="AtLeastOneConstructor"/>
         <exclude name="OnlyOneReturn"/>
         <exclude name="AtLeastOneConstructor"/>
@@ -21,7 +21,12 @@
         <exclude name="ShortVariable"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
     </rule>
--->
+
+    <rule ref="category/java/codestyle.xml/ShortClassName">
+        <properties>
+            <property name="minimum" value="5" />
+        </properties>
+    </rule>
 
 
     <rule ref="category/java/design.xml">

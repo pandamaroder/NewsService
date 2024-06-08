@@ -29,25 +29,22 @@ class NewsServiceTests extends TestBase {
     @Autowired
     private CategoryRepository categoryRepository;
 
-
-
     @Test
     void createNews() {
         final UserCreateResponse testUser = userService.createUser(new UserCreateRequest("TestUser"));
 
         final int countCategoryBefore = getEntriesCount(TABLE_NAME_CATEGORIES);
-        final  int countNewsBefore = getEntriesCount(TABLE_NAME_NEWS);
+        final int countNewsBefore = getEntriesCount(TABLE_NAME_NEWS);
 
-        final  String categoryName = DataHelper.getAlphabeticString(10);
+        final String categoryName = DataHelper.getAlphabeticString(10);
         final NewsDto newsDto = NewsDto.builder().categoryName(categoryName).content(categoryName)
                 .title("testTitle")
                 .userId(testUser.userId()).build();
 
         final NewsDto news = newsService.createNews(newsDto);
 
-        final  int  countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
-        final int  countNewsAfter = getEntriesCount(TABLE_NAME_NEWS);
-
+        final int countCategoryAfter = getEntriesCount(TABLE_NAME_CATEGORIES);
+        final int countNewsAfter = getEntriesCount(TABLE_NAME_NEWS);
 
         assertThat(countCategoryAfter - countCategoryBefore)
                 .isOne();

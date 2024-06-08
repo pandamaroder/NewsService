@@ -1,9 +1,6 @@
 package com.example.demo;
 
 import com.example.demo.model.BaseEntity;
-import com.example.demo.services.CommentService;
-import com.example.demo.services.NewsService;
-import com.example.demo.services.UserService;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -19,12 +19,15 @@
         <exclude name="CommentDefaultAccessModifier"/>
         <exclude name="LongVariable"/>
         <exclude name="ShortVariable"/>
+        <exclude name="LocalVariableCouldBeFinal"/>
         <exclude name="MethodArgumentCouldBeFinal"/>
     </rule>
 
+
+
     <rule ref="category/java/codestyle.xml/ShortClassName">
         <properties>
-            <property name="minimum" value="5" />
+            <property name="minimum" value="4" />
         </properties>
     </rule>
 

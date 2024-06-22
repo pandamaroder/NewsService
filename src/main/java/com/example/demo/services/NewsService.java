@@ -6,6 +6,7 @@ import com.example.demo.dto.NewsCreateRequest;
 import com.example.demo.dto.NewsDto;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Category;
+import com.example.demo.model.Comment;
 import com.example.demo.model.News;
 import com.example.demo.repositories.NewsRepository;
 import com.example.demo.repositories.UserRepository;
@@ -31,7 +32,6 @@ public class NewsService extends BaseService {
     private final CategoryService categoryService;
 
     @Transactional
-    @RequireNewsAuthor
     public NewsDto createNews(NewsCreateRequest newsDto) {
         final Category categoryResponse = categoryService
             .createIfNeedCategory(newsDto.getCategoryName());
@@ -77,6 +77,7 @@ public class NewsService extends BaseService {
     }
 
     @Transactional
+    @RequireNewsAuthor
     public NewsDto deleteNews(long newsId) {
 
         final News news = newsRepository
@@ -111,8 +112,23 @@ public class NewsService extends BaseService {
     }
 
     @Transactional
-    public CommentDto updateNews(NewsDto newsDto) {
+    @RequireNewsAuthor
+    public NewsDto updateNews(NewsDto newsDto) {
         //TODO комментарии редактировать по счетчику
-        return null;
+
+        final News newsToUpdate = newsRepository
+            .findById(newsDto.getId())
+            .orElseThrow(() -> new NotFoundException("Новости с таким ID не существует"));
+        newsToUpdate.setContent(newsDto.getContent());
+        newsToUpdate.setTitle(newsDto.getTitle());
+        newsRepository.save(newsToUpdate);
+        return NewsDto.builder()
+            .userId(newsDto.getUserId())
+            .id(newsDto.getId())
+            .content(newsDto.getContent())
+            .categoryName(newsDto.getCategoryName())
+            .title(newsDto.getTitle())
+            .build();
     }
+
 }

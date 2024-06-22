@@ -7,6 +7,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
+//почему создается без конструктора
 public class UserDto {
 
     private long id;

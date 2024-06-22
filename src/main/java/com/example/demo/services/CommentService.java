@@ -31,7 +31,6 @@ public class CommentService {
     private final NewsRepository newsRepository;
 
     @Transactional
-    @RequireCommentAuthor
     public CommentDto createComment(CommentCreateDto commentDto) {
         final User userToAdjust = userRepository.getReferenceById(commentDto.getUserId());
         final News newsToAdjust = newsRepository.getReferenceById(commentDto.getNewsId());
@@ -50,6 +49,7 @@ public class CommentService {
     }
 
     @Transactional
+    @RequireCommentAuthor
     public CommentDto deleteComment(long commentId) {
 
         final Comment comment = commentRepository.getById(commentId);
@@ -63,6 +63,7 @@ public class CommentService {
     }
 
     @Transactional
+    @RequireCommentAuthor
     public CommentDto updateComment(CommentUpdateDto commentCreateDto) {
         //TODO комментарии редактировать по счетчику
         final Comment commentToUpdate = commentRepository

@@ -62,7 +62,8 @@ class NewsServiceTests extends UserAwareTestBase {
 
     @Test
     void retrieveSortedByTitlePaginatedNews() {
-        final NewsDto newsForTest = createNewsForTest("nature", "Nature", "Belochkin");
+        //forced to change user name -> no db data isolation in test
+        final NewsDto newsForTest = createNewsForTest("nature", "Nature", "Belochkin2");
         final NewsDto newsForTest1 = createNewsForTest("sport", "sport", "Orehov");
         final NewsDto newsForTest2 = createNewsForTest("a", "abc", "Lesnoy");
         final List<NewsDto> retrievedNews = newsService.retrieveNews(0, 3, true);
@@ -75,7 +76,10 @@ class NewsServiceTests extends UserAwareTestBase {
     private NewsDto createNewsForTest(String category, String title, String userName) {
 
         final UserCreateResponse testUser = userService.createUser(new UserCreateRequest(userName));
-        final NewsCreateRequest newsDto = NewsCreateRequest.builder().categoryName(category).content(category)
+        final NewsCreateRequest newsDto = NewsCreateRequest
+            .builder()
+            .categoryName(category)
+            .content(category)
             .title(title)
             .userId(testUser.userId()).build();
 

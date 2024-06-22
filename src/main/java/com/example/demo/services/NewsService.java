@@ -15,8 +15,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
@@ -43,8 +41,7 @@ public class NewsService extends BaseService {
             .content(cleanData(newsDto.getContent()))
             //пытаемся понять по id - возвращает прокси объект
             .user(userRepository
-                .getReferenceById(newsDto.getUserId()))
-            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
+            .getReferenceById(newsDto.getUserId()))
             .category(categoryResponse)
             .build();
 

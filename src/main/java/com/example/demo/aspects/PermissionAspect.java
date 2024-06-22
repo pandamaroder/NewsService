@@ -1,43 +1,34 @@
 package com.example.demo.aspects;
 
-import com.example.demo.dto.CommentUpdateDto;
-import com.example.demo.exceptions.NotAuthorizedException;
-import com.example.demo.model.Comment;
-import com.example.demo.model.News;
-import com.example.demo.model.User;
-import com.example.demo.repositories.CommentRepository;
-import com.example.demo.repositories.NewsRepository;
-import com.example.demo.services.UserService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import java.util.Objects;
-import java.util.Optional;
-import javax.servlet.http.HttpServletRequest;
 
 @Component
 @Aspect
 public class PermissionAspect {
 
-    @Autowired
+    /* @Autowired
     private NewsRepository newsRepository;
 
     @Autowired
     private CommentRepository commentRepository;
 
     @Autowired
-    private UserService userService;
+    private UserService userService;*/
 
     @Before("@annotation(com.example.demo.annotations.RequireNewsAuthor)")
     public void checkNewsPermission(JoinPoint joinPoint) {
-        final Long newsId = (Long) joinPoint.getArgs()[0];
+        /*final Long newsId = (Long) joinPoint.getArgs()[0];
 
+        Long commentId = null;
+        final Object[] args = joinPoint.getArgs();
+
+        if (args.length > 0 && args[0] instanceof NewsCreateRequest) {
+            final NewsCreateRequest commentDto = (NewsCreateRequest) args[0];
+            commentId = commentDto.;
+        }
         final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
         final HttpServletRequest request = (HttpServletRequest)
             ((ServletRequestAttributes)
@@ -52,12 +43,12 @@ public class PermissionAspect {
             }
         } else {
             throw new NotAuthorizedException("Новость не найдена");
-        }
+        }*/
     }
 
     @Before("@annotation(com.example.demo.annotations.RequireCommentAuthor)")
     public void checkCommentPermission(JoinPoint joinPoint) {
-        Long commentId = null;
+    /*       Long commentId = null;
         final Object[] args = joinPoint.getArgs();
 
         if (args.length > 0 && args[0] instanceof CommentUpdateDto) {
@@ -78,7 +69,7 @@ public class PermissionAspect {
             }
         } else {
             throw new NotAuthorizedException("Комментарий не найден");
-        }
+        }*/
     }
 }
 

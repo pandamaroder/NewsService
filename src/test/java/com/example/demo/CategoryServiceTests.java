@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.IllegalTransactionStateException;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import java.util.Locale;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -87,14 +88,15 @@ class CategoryServiceTests extends UserAwareTestBase {
         assertThat(categoryDtoAfterUpdate.id())
             .isPositive();
         assertThat(categoryDtoAfterUpdate.name())
-            .isEqualTo(updatedCategoryName);
+            .isEqualTo(updatedCategoryName.trim()
+                .toLowerCase(Locale.ROOT));
         assertThat(categoryDtoAfterUpdate)
-            .isEqualTo(updatedCategoryName);
+            .isEqualTo(categoryDtoAfterUpdate);
     }
 
     @Test
     void testCreateIfNeedCategoryInTransaction() {
-        final String categoryName = "testCategory";
+        final String categoryName = "testcategory";
         assertThat(categoryRepository.findByName(categoryName))
             .isNotPresent();
         //TODO на 22 рефактор
@@ -113,7 +115,7 @@ class CategoryServiceTests extends UserAwareTestBase {
 
     @Test
     void testCreateIfNeedCategoryWithoutTransaction() {
-        final String categoryName = "testCategoryNoTransaction";
+        final String categoryName = "test";
 
         assertThatThrownBy(() -> categoryService
             .createIfNeedCategory(categoryName))

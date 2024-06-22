@@ -47,7 +47,7 @@ public class User extends BaseEntity {
         if (!(o instanceof User)) {
             return false;
         }
-        User user = (User) o;
+        final User user = (User) o;
         return Objects.equals(username, user.username);
     }
 

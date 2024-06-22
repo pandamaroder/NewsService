@@ -41,24 +41,21 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:1.4.2.Final")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
 	implementation("org.reflections:reflections:0.10.2")
-
-
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-impl:0.11.2")
+    implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
     errorprone("com.google.errorprone:error_prone_core:2.27.1")
-
-
-	implementation("com.google.errorprone:error_prone_core:2.26.0")
-	implementation("com.puppycrawl.tools:checkstyle:9.2")
-	implementation("com.google.code.findbugs:findbugs:3.0.1")
-	implementation("com.github.spotbugs:spotbugs:4.5.0")
 }
 
 
-/*tasks.withType<JavaCompile>().configureEach {
+tasks.withType<JavaCompile>().configureEach {
     options.errorprone {
         disableWarningsInGeneratedCode.set(true)
-        disable("StringSplitter", "ImmutableEnumChecker", "FutureReturnValueIgnored", "EqualsIncompatibleType", "TruthSelfEquals", "Slf4jLoggerShouldBeNonStatic", "Slf4jSignOnlyFormat")
+        disable("StringSplitter", "ImmutableEnumChecker", "FutureReturnValueIgnored", "EqualsIncompatibleType", "TruthSelfEquals")
     }
-}*/
+}
 tasks {
 
 	test {

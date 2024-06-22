@@ -5,6 +5,8 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedAttributeNode;
+import jakarta.persistence.NamedEntityGraph;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -27,6 +29,16 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "news")
+@NamedEntityGraph(
+    name = "retrieve-news-entity-with-attr",
+    attributeNodes = {
+        @NamedAttributeNode("title"),
+        @NamedAttributeNode("content")
+    }
+)
+/*При возврате списка новостей ответ не должен содержать списка комментариев
+    к каждой новости. !!!Вместо этого убедитесь, что каждый объект из списка
+    содержит значение, отображающее количество комментариев.*/
 public class News extends BaseEntity {
 
     private String title;

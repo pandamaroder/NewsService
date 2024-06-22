@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 
+import java.time.Clock;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,9 @@ public abstract class TestBase {
     static final String TABLE_NAME_NEWS = "demo.news";
     static final String TABLE_NAME_USERS = "demo.users";
     static final String TABLE_NAME_COMMENTS = "demo.comments";
+
+    @Autowired
+    protected Clock clock;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

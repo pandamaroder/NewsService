@@ -4,11 +4,13 @@ import com.example.demo.model.Category;
 import com.example.demo.model.News;
 import com.example.demo.model.User;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Random;
 
 public class DataHelper {
 
-    //Другая реализация - прокидывать сервисы в зависимости методов, тк данный класс ничего не знает про Spring
+    //Другая реализация - прокидывать сервисы в параметры в этом классе , тк данный класс ничего не знает про Spring
     /* static void prepareNewsWithUsers(final String categoryName) {
         final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Petrov"));
         final UserCreateResponse userOther = userService.createUser(new UserCreateRequest("Callinial"));
@@ -50,7 +52,7 @@ public class DataHelper {
     }
 
     public static Category.CategoryBuilder<?, ?> prepareCategory() {
-        return Category.builder().name("test1");
+        return Category.builder().name("test1").createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
     }
 
     public static Category.CategoryBuilder<?, ?> preparePlainCategory() {

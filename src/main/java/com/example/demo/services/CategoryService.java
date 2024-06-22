@@ -19,28 +19,29 @@ import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class CategoryService {
+public class CategoryService extends BaseService {
 
     private final CategoryRepository categoryRepository;
 
     @Transactional
     public CategoryCreateResponse createCategory(CategoryCreateRequest request) {
-        Category category = Category.builder()
-            .name(request.name())
-            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
+        final Category category = Category.builder()
+            .name(cleanData(request.name()))
             .build();
-        Category savedCategory = categoryRepository.save(category);
+        final Category savedCategory = categoryRepository.save(category);
         return new CategoryCreateResponse(savedCategory.getId(), savedCategory.getName());
     }
 
     @Transactional(propagation = MANDATORY) // только в рамках существующей категории
     public Category createIfNeedCategory(String categoryName) {
-        Optional<Category> categoryByName = categoryRepository.findByName(categoryName);
+        final String categoryNameCleaned = cleanData(categoryName);
+        final Optional<Category> categoryByName = categoryRepository
+            .findByName(categoryNameCleaned);
         if (categoryByName.isPresent()) {
             return categoryByName.get();
         }
-        Category category = Category.builder()
-            .name(categoryName)
+        final Category category = Category.builder()
+            .name(categoryNameCleaned)
             .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
             .build();
         return categoryRepository.save(category);
@@ -48,7 +49,7 @@ public class CategoryService {
 
     @Transactional
     public CategoryDto deleteCategory(long categoryId) {
-        Category category = categoryRepository
+        final Category category = categoryRepository
             .findById(categoryId)
             .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
         categoryRepository.delete(category);
@@ -58,12 +59,12 @@ public class CategoryService {
     @Transactional
     public CategoryDto updateCategory(CategoryDto categoryDto) {
 
-        Category categoryToUpdate = categoryRepository
+        final Category categoryToUpdate = categoryRepository
             .findById(categoryDto.id())
             .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
         categoryToUpdate.setName(categoryDto.name());
+        categoryToUpdate.setUpdatedAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
         categoryRepository.save(categoryToUpdate);
         return new CategoryDto(categoryToUpdate.getId(), categoryToUpdate.getName());
     }
-
 }

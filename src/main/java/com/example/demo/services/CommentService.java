@@ -16,9 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -41,7 +38,6 @@ public class CommentService {
         final Comment comment = Comment.builder()
                 .news(newsToAdjust)
                 .user(userToAdjust)
-                .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
                 .text(commentDto.getText())
                 .build();
         commentRepository.save(comment);
@@ -73,7 +69,7 @@ public class CommentService {
                 .findById(commentCreateDto.id())
                 .orElseThrow(() -> new NotFoundException("Комментария с таким ID не существует"));
         commentToUpdate.setText(commentCreateDto.text());
-        commentToUpdate.setUpdatedAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
+
         commentRepository.save(commentToUpdate);
         return CommentDto.builder().text(commentToUpdate.getText())
                 .newsId(commentToUpdate.getNews().getId())

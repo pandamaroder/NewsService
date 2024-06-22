@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Optional;
 
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
@@ -42,7 +40,6 @@ public class CategoryService extends BaseService {
         }
         final Category category = Category.builder()
             .name(categoryNameCleaned)
-            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
             .build();
         return categoryRepository.save(category);
     }
@@ -63,7 +60,6 @@ public class CategoryService extends BaseService {
             .findById(categoryDto.id())
             .orElseThrow(() -> new NotFoundException("Категории с таким ID не существует"));
         categoryToUpdate.setName(categoryDto.name());
-        categoryToUpdate.setUpdatedAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
         categoryRepository.save(categoryToUpdate);
         return new CategoryDto(categoryToUpdate.getId(), categoryToUpdate.getName());
     }

@@ -4,8 +4,6 @@ import com.example.demo.model.Category;
 import com.example.demo.model.News;
 import com.example.demo.model.User;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Random;
 
 public class DataHelper {
@@ -52,7 +50,7 @@ public class DataHelper {
     }
 
     public static Category.CategoryBuilder<?, ?> prepareCategory() {
-        return Category.builder().name("test1").createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")));
+        return Category.builder().name("test1");
     }
 
     public static Category.CategoryBuilder<?, ?> preparePlainCategory() {

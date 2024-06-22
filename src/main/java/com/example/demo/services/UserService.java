@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import javax.servlet.http.HttpServletRequest;
 
 @Service
@@ -26,7 +24,6 @@ public class UserService {
 
         final User user = User.builder()
             .username(userCreateRequest.username())
-            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
             .build();
         final User savedUser = userRepository.save(user);
         return new UserCreateResponse(savedUser.getId(), savedUser.getUsername());

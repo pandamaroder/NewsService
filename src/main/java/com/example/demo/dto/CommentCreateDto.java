@@ -1,13 +1,17 @@
 package com.example.demo.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 
-@Getter
-@Setter
+@Data
+@Validated
 @SuperBuilder
+@RequiredArgsConstructor
 public class CommentCreateDto {
 
     @NotBlank

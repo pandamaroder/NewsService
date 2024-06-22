@@ -1,15 +1,19 @@
 package com.example.demo.dto;
 
+import lombok.Data;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Locale;
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
+@Validated
 @SuperBuilder
+@RequiredArgsConstructor
 public class NewsDto {
 
     private long id;

@@ -7,13 +7,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.springframework.validation.annotation.Validated;
 
-
 @Data
 @Validated
 @SuperBuilder
 @RequiredArgsConstructor
 public class NewsCreateRequest {
-
 
     @NotBlank
     private String title;
@@ -24,7 +22,6 @@ public class NewsCreateRequest {
     @NotBlank
     @NotNull
     private long userId;
-
 
     private String categoryName;
 }

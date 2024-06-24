@@ -1,9 +1,7 @@
 package com.example.demo.dto;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.validation.annotation.Validated;
 
@@ -16,13 +14,13 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class NewsDto {
 
-    private long id;
+    private Long id;
 
     private String title;
 
     private String content;
 
-    private long userId;
+    private Long userId;
 
     private String categoryName;
 
@@ -37,7 +35,7 @@ public class NewsDto {
         return Objects.equals(title, newsDto.title.trim().toLowerCase(Locale.ROOT)) &&
             Objects.equals(content, newsDto.content) &&
             Objects.equals(categoryName, newsDto.categoryName) &&
-            userId == newsDto.userId;
+            userId.equals(newsDto.userId);
     }
 
     @Override

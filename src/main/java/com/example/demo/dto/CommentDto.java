@@ -1,9 +1,7 @@
 package com.example.demo.dto;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.validation.annotation.Validated;
 
@@ -13,11 +11,11 @@ import org.springframework.validation.annotation.Validated;
 @RequiredArgsConstructor
 public class CommentDto {
 
-    private long id;
+    private Long id;
 
     private String text;
 
-    private long userId;
+    private Long userId;
 
-    private long newsId;
+    private Long newsId;
 }

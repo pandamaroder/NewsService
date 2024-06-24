@@ -90,8 +90,8 @@ class CategoryServiceTests extends UserAwareTestBase {
         assertThat(categoryDtoAfterUpdate.name())
             .isEqualTo(updatedCategoryName.trim()
                 .toLowerCase(Locale.ROOT));
-        assertThat(categoryDtoAfterUpdate)
-            .isEqualTo(categoryDtoAfterUpdate);
+        assertThat(categoryDtoAfterUpdate.name())
+            .isEqualTo(updatedCategoryName);
     }
 
     @Test

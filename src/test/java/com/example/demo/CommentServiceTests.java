@@ -28,9 +28,6 @@ class CommentServiceTests extends UserAwareTestBase {
     private UserService userService;
 
     @Autowired
-    private CommentService commentService;
-
-    @Autowired
     private NewsService newsService;
 
     @Autowired

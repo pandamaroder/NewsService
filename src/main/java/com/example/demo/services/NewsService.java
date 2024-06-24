@@ -1,12 +1,10 @@
 package com.example.demo.services;
 
 import com.example.demo.annotations.RequireNewsAuthor;
-import com.example.demo.dto.CommentDto;
 import com.example.demo.dto.NewsCreateRequest;
 import com.example.demo.dto.NewsDto;
 import com.example.demo.exceptions.NotFoundException;
 import com.example.demo.model.Category;
-import com.example.demo.model.Comment;
 import com.example.demo.model.News;
 import com.example.demo.repositories.NewsRepository;
 import com.example.demo.repositories.UserRepository;
@@ -41,7 +39,7 @@ public class NewsService extends BaseService {
             .content(cleanData(newsDto.getContent()))
             //пытаемся понять по id - возвращает прокси объект
             .user(userRepository
-            .getReferenceById(newsDto.getUserId()))
+                .getReferenceById(newsDto.getUserId()))
             .category(categoryResponse)
             .build();
 

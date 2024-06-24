@@ -53,7 +53,7 @@ public abstract class TestBase {
     protected WebTestClient webTestClient;
     @LocalServerPort
     protected int port;
-    @Value("${local.management.port}")
+    @LocalManagementPort
     protected int actuatorPort;
 
 

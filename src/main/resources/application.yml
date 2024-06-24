@@ -23,6 +23,7 @@ spring:
         format_sql: true
         default_schema: demo
 
+
 springdoc:
     swagger-ui:
         tagsSorter: alpha

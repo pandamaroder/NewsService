@@ -9,13 +9,7 @@ import com.example.demo.services.CommentService;
 import com.example.demo.services.NewsService;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@ContextConfiguration(initializers = PostgresInitializer.class)
 public abstract class UserAwareTestBase extends TestBase {
 
     @Autowired
@@ -25,7 +19,7 @@ public abstract class UserAwareTestBase extends TestBase {
     private UserService userService;
 
     @Autowired
-    private CommentService commentservice;
+    private CommentService commentService;
 
     protected void prepareNewsWithUsers(final String categoryName) {
         final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Zaichikov"));
@@ -58,9 +52,22 @@ public abstract class UserAwareTestBase extends TestBase {
         final CommentCreateDto commentDto4 = CommentCreateDto.builder().newsId(news1.getId())
             .userId(userOther.userId())
             .text("Comment#4").build();
-        commentservice.createComment(commentDto);
-        commentservice.createComment(commentDto2);
-        commentservice.createComment(commentDto3);
-        commentservice.createComment(commentDto4);
+        commentService.createComment(commentDto);
+        commentService.createComment(commentDto2);
+        commentService.createComment(commentDto3);
+        commentService.createComment(commentDto4);
+    }
+
+    protected NewsDto createNewsForTest(String category, String title, String userName) {
+
+        final UserCreateResponse testUser = userService.createUser(new UserCreateRequest(userName));
+        final NewsCreateRequest newsDto = NewsCreateRequest
+            .builder()
+            .categoryName(category)
+            .content(category)
+            .title(title)
+            .userId(testUser.userId()).build();
+
+        return newsService.createNews(newsDto);
     }
 }

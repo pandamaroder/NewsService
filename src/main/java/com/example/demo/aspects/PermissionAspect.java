@@ -1,75 +1,73 @@
 package com.example.demo.aspects;
 
+import com.example.demo.dto.NewsDto;
+import com.example.demo.exceptions.NotAuthorizedException;
+import com.example.demo.model.News;
+import com.example.demo.model.User;
+import com.example.demo.repositories.NewsRepository;
+import com.example.demo.repositories.UserRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import java.util.Enumeration;
+import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @Aspect
 public class PermissionAspect {
 
-    /* @Autowired
+    @Autowired
     private NewsRepository newsRepository;
 
     @Autowired
-    private CommentRepository commentRepository;
-
-    @Autowired
-    private UserService userService;*/
+    private UserRepository userRepository;
 
     @Before("@annotation(com.example.demo.annotations.RequireNewsAuthor)")
     public void checkNewsPermission(JoinPoint joinPoint) {
-        /*final Long newsId = (Long) joinPoint.getArgs()[0];
 
-        Long commentId = null;
+        Long newsId = null;
+        final String desiredHeaderName = "userid";
+        String desiredHeaderValue = null;
         final Object[] args = joinPoint.getArgs();
-
-        if (args.length > 0 && args[0] instanceof NewsCreateRequest) {
-            final NewsCreateRequest commentDto = (NewsCreateRequest) args[0];
-            commentId = commentDto.;
+        final NewsDto newsDtoFromReq = (NewsDto) args[0];
+        if (args.length > 0 && args[0] instanceof NewsDto) {
+            newsId = newsDtoFromReq.getId();
         }
-        final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-        final HttpServletRequest request = (HttpServletRequest)
-            ((ServletRequestAttributes)
-                Objects.requireNonNull(requestAttributes)).getRequest();
+
+        final ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+            .getRequestAttributes();
+        if (requestAttributes != null) {
+            final HttpServletRequest request = requestAttributes.getRequest();
+            final Enumeration<String> headerNames = request.getHeaderNames(); // Replace with the name of the header you're looking for
+
+            while (headerNames.hasMoreElements()) {
+                final String headerName = headerNames.nextElement();
+
+                if (headerName.equalsIgnoreCase(desiredHeaderName)) {
+                    desiredHeaderValue = request.getHeader(headerName);
+                    break;
+                }
+            }
+        }
 
         final Optional<News> newsOptional = newsRepository.findById(newsId);
         if (newsOptional.isPresent()) {
-            final News news = newsOptional.get();
-            final User currentUser = userService.getCurrentUser(request);
-            if (!news.getUser().equals(currentUser)) {
-                throw new NotAuthorizedException("Вы не можете редактировать или удалять эту новость");
+            final News newsFromApp = newsOptional.get();
+            final Optional<User> userFromAppOptional = userRepository.findById(newsFromApp.getUser().getId());
+            if (userFromAppOptional.isPresent() && !userFromAppOptional
+                .get()
+                .getId()
+                .equals(Long.parseLong(Objects.requireNonNull(desiredHeaderValue)))) {
+                throw new NotAuthorizedException("We're sorry but news couldn't be updated by user");
             }
-        } else {
-            throw new NotAuthorizedException("Новость не найдена");
-        }*/
-    }
-
-    @Before("@annotation(com.example.demo.annotations.RequireCommentAuthor)")
-    public void checkCommentPermission(JoinPoint joinPoint) {
-    /*       Long commentId = null;
-        final Object[] args = joinPoint.getArgs();
-
-        if (args.length > 0 && args[0] instanceof CommentUpdateDto) {
-            final CommentUpdateDto commentDto = (CommentUpdateDto) args[0];
-            commentId = commentDto.id();
         }
-
-        final RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
-
-        final HttpServletRequest request = (HttpServletRequest) ((ServletRequestAttributes) requestAttributes).getRequest();
-
-        final Optional<Comment> commentOptional = commentRepository.findById(commentId);
-        if (commentOptional.isPresent()) {
-            final Comment comment = commentOptional.get();
-            final User currentUser = userService.getCurrentUser(request);
-            if (!comment.getUser().equals(currentUser)) {
-                throw new NotAuthorizedException("Вы не можете редактировать или удалять этот комментарий");
-            }
-        } else {
-            throw new NotAuthorizedException("Комментарий не найден");
-        }*/
     }
 }
 

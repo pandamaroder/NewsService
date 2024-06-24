@@ -1,6 +1,5 @@
 package com.example.demo.controllers;
 
-import com.example.demo.dto.CategoryDto;
 import com.example.demo.dto.NewsCreateRequest;
 import com.example.demo.dto.NewsDto;
 import com.example.demo.services.NewsService;
@@ -71,6 +70,4 @@ public class NewsController {
     public NewsDto updateNews(@RequestBody NewsDto dto) {
         return newsService.updateNews(dto);
     }
-
-
 }

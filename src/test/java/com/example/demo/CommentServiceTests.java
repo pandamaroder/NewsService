@@ -1,34 +1,17 @@
 package com.example.demo;
 
-import com.example.demo.dto.NewsCreateRequest;
 import com.example.demo.dto.NewsDto;
-import com.example.demo.dto.UserCreateRequest;
-import com.example.demo.dto.UserCreateResponse;
 import com.example.demo.helpers.DataHelper;
 import com.example.demo.repositories.CategoryRepository;
-import com.example.demo.services.CommentService;
 import com.example.demo.services.NewsService;
-import com.example.demo.services.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
-@SpringBootTest
-@ActiveProfiles("test")
 class CommentServiceTests extends UserAwareTestBase {
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private CommentService commentService;
 
     @Autowired
     private NewsService newsService;
@@ -76,18 +59,4 @@ class CommentServiceTests extends UserAwareTestBase {
         assertThat(retrievedNews)
             .containsExactly(newsForTest2, newsForTest, newsForTest1);
     }
-
-    private NewsDto createNewsForTest(String category, String title, String userName) {
-
-        final UserCreateResponse testUser = userService.createUser(new UserCreateRequest(userName));
-        final NewsCreateRequest newsDto = NewsCreateRequest
-            .builder()
-            .categoryName(category)
-            .content(category)
-            .title(title)
-            .userId(testUser.userId()).build();
-
-        return newsService.createNews(newsDto);
-    }
-
 }

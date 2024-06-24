@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.annotations.RequireCommentAuthor;
 import com.example.demo.dto.CommentCreateDto;
 import com.example.demo.dto.CommentDto;
 import com.example.demo.dto.CommentUpdateDto;
@@ -49,7 +48,6 @@ public class CommentService {
     }
 
     @Transactional
-    @RequireCommentAuthor
     public CommentDto deleteComment(long commentId) {
 
         final Comment comment = commentRepository.getById(commentId);
@@ -63,7 +61,6 @@ public class CommentService {
     }
 
     @Transactional
-    @RequireCommentAuthor
     public CommentDto updateComment(CommentUpdateDto commentCreateDto) {
         //TODO комментарии редактировать по счетчику
         final Comment commentToUpdate = commentRepository

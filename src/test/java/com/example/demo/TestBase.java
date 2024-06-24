@@ -3,14 +3,25 @@ package com.example.demo;
 import com.example.demo.model.BaseEntity;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
+import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.reactive.server.WebTestClient;
+import org.threeten.extra.MutableClock;
 
 import java.time.Clock;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.Month;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -18,9 +29,10 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+@SuppressWarnings("PMD.ExcessiveImports")
 @ActiveProfiles("test")
-@SpringBootTest
-@ContextConfiguration(initializers = PostgresInitializer.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
 public abstract class TestBase {
 
     static final String TABLE_NAME_CATEGORIES = "demo.categories";
@@ -28,11 +40,31 @@ public abstract class TestBase {
     static final String TABLE_NAME_USERS = "demo.users";
     static final String TABLE_NAME_COMMENTS = "demo.comments";
 
+    protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
+
     @Autowired
     protected Clock clock;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    protected WebTestClient webTestClient;
+
+    @LocalServerPort
+    protected int port;
+
+    @Autowired
+    protected MutableClock mutableClock;
+
+    static Instant getTestInstant() {
+        return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);
+    }
+
+    @AfterEach
+    void resetClock() {
+        mutableClock.setInstant(getTestInstant());
+    }
 
     protected int getEntriesCount(final String tableName) {
         final String countRowsSql = String.format("SELECT COUNT(*) FROM %s", tableName);
@@ -68,4 +100,20 @@ public abstract class TestBase {
             .as("Метод toString не должен генерировать ошибок")
             .isThrownBy(c::toString)); // toString
     }
+
+    @TestConfiguration
+    static class CustomClockConfiguration {
+
+        @Bean
+        public MutableClock mutableClock() {
+            return MutableClock.of(getTestInstant(), ZoneOffset.UTC);
+        }
+
+        @Bean
+        @Primary
+        public Clock fixedClock(@Nonnull final MutableClock mutableClock) {
+            return mutableClock;
+        }
+    }
+
 }

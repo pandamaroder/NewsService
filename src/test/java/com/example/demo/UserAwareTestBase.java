@@ -1,21 +1,14 @@
 package com.example.demo;
 
-import com.example.demo.dto.CategoryCreateRequest;
-import com.example.demo.dto.CategoryCreateResponse;
 import com.example.demo.dto.CommentCreateDto;
 import com.example.demo.dto.NewsCreateRequest;
 import com.example.demo.dto.NewsDto;
 import com.example.demo.dto.UserCreateRequest;
 import com.example.demo.dto.UserCreateResponse;
-import com.example.demo.helpers.DataHelper;
-import com.example.demo.services.CategoryService;
 import com.example.demo.services.CommentService;
 import com.example.demo.services.NewsService;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.ContextConfiguration;
 
 public abstract class UserAwareTestBase extends TestBase {
 
@@ -27,9 +20,6 @@ public abstract class UserAwareTestBase extends TestBase {
 
     @Autowired
     private CommentService commentService;
-
-    @Autowired
-    private CategoryService categoryService;
 
     protected void prepareNewsWithUsers(final String categoryName) {
         final UserCreateResponse petrPetrov = userService.createUser(new UserCreateRequest("Zaichikov"));

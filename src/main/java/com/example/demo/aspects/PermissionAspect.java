@@ -4,20 +4,16 @@ import com.example.demo.dto.NewsDto;
 import com.example.demo.exceptions.NotAuthorizedException;
 import com.example.demo.model.News;
 import com.example.demo.model.User;
-import com.example.demo.repositories.CommentRepository;
 import com.example.demo.repositories.NewsRepository;
 import com.example.demo.repositories.UserRepository;
-import com.example.demo.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
 
 import java.util.Enumeration;
 import java.util.Objects;
@@ -33,32 +29,27 @@ public class PermissionAspect {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
-
     @Before("@annotation(com.example.demo.annotations.RequireNewsAuthor)")
     public void checkNewsPermission(JoinPoint joinPoint) {
 
         Long newsId = null;
-        Long userIdFromNews = null;
-        String desiredHeaderName = "userid";
+        final String desiredHeaderName = "userid";
         String desiredHeaderValue = null;
         final Object[] args = joinPoint.getArgs();
         final NewsDto newsDtoFromReq = (NewsDto) args[0];
         if (args.length > 0 && args[0] instanceof NewsDto) {
-             newsId = newsDtoFromReq.getId();
-            userIdFromNews = newsDtoFromReq.getUserId();
+            newsId = newsDtoFromReq.getId();
         }
 
-
-        ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
+        final ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder
             .getRequestAttributes();
         if (requestAttributes != null) {
-            HttpServletRequest request = requestAttributes.getRequest();
-            Enumeration<String> headerNames = request.getHeaderNames();// Replace with the name of the header you're looking for
+            final HttpServletRequest request = requestAttributes.getRequest();
+            final Enumeration<String> headerNames = request.getHeaderNames(); // Replace with the name of the header you're looking for
 
             while (headerNames.hasMoreElements()) {
-                String headerName = headerNames.nextElement();
+                final String headerName = headerNames.nextElement();
+
                 if (headerName.equalsIgnoreCase(desiredHeaderName)) {
                     desiredHeaderValue = request.getHeader(headerName);
                     break;

@@ -5,20 +5,16 @@ import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import org.junit.jupiter.api.AfterEach;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.web.server.LocalManagementPort;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;
-import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.threeten.extra.MutableClock;
 
 import java.time.Clock;
@@ -33,7 +29,6 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
-
 @SuppressWarnings("PMD.ExcessiveImports")
 @ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -44,6 +39,8 @@ public abstract class TestBase {
     static final String TABLE_NAME_NEWS = "demo.news";
     static final String TABLE_NAME_USERS = "demo.users";
     static final String TABLE_NAME_COMMENTS = "demo.comments";
+
+    protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
 
     @Autowired
     protected Clock clock;
@@ -60,6 +57,14 @@ public abstract class TestBase {
     @Autowired
     protected MutableClock mutableClock;
 
+    static Instant getTestInstant() {
+        return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);
+    }
+
+    @AfterEach
+    void resetClock() {
+        mutableClock.setInstant(getTestInstant());
+    }
 
     protected int getEntriesCount(final String tableName) {
         final String countRowsSql = String.format("SELECT COUNT(*) FROM %s", tableName);
@@ -111,14 +116,4 @@ public abstract class TestBase {
         }
     }
 
-    static Instant getTestInstant() {
-        return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);
-    }
-    protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
-
-
-    @AfterEach
-    void resetClock() {
-        mutableClock.setInstant(getTestInstant());
-    }
 }

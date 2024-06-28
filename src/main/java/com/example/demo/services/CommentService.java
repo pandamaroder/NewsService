@@ -1,6 +1,5 @@
 package com.example.demo.services;
 
-import com.example.demo.annotations.RequireCommentAuthor;
 import com.example.demo.dto.CommentCreateDto;
 import com.example.demo.dto.CommentDto;
 import com.example.demo.dto.CommentUpdateDto;

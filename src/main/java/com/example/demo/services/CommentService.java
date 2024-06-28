@@ -49,7 +49,6 @@ public class CommentService {
     }
 
     @Transactional
-    @RequireCommentAuthor
     public CommentDto deleteComment(long commentId) {
 
         final Comment comment = commentRepository.getById(commentId);
@@ -63,7 +62,6 @@ public class CommentService {
     }
 
     @Transactional
-    @RequireCommentAuthor
     public CommentDto updateComment(CommentUpdateDto commentCreateDto) {
         //TODO комментарии редактировать по счетчику
         final Comment commentToUpdate = commentRepository

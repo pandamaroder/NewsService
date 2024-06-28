@@ -49,6 +49,7 @@ dependencies {
     implementation("io.jsonwebtoken:jjwt-jackson:0.11.2")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
     errorprone("com.google.errorprone:error_prone_core:2.27.1")
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
 }
 
 
@@ -61,7 +62,7 @@ tasks.withType<JavaCompile>().configureEach {
 tasks {
 
 	test {
-		//dependsOn(checkstyleTest, checkstyleMain, pmdMain, pmdTest)
+		dependsOn(checkstyleTest, checkstyleMain, pmdMain, pmdTest)
 		testLogging.showStandardStreams = false // set to true for debug purposes
 		useJUnitPlatform()
 		finalizedBy(jacocoTestReport, jacocoTestCoverageVerification)

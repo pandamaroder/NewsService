@@ -18,6 +18,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.reactive.server.WebTestClient;
+import org.testcontainers.junit.jupiter.Testcontainers;
 import org.threeten.extra.MutableClock;
 
 import java.time.Clock;
@@ -32,10 +33,10 @@ import java.util.Set;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 
+
 @SuppressWarnings("PMD.ExcessiveImports")
 @ActiveProfiles("test")
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, properties = {
-    "management.server.port=0" })
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = TestBase.CustomClockConfiguration.class, initializers = PostgresInitializer.class)
 public abstract class TestBase {
 
@@ -50,14 +51,11 @@ public abstract class TestBase {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    @Autowired
     protected WebTestClient webTestClient;
+
     @LocalServerPort
     protected int port;
-    @LocalManagementPort
-    protected int actuatorPort;
-
-
-
 
     @Autowired
     protected MutableClock mutableClock;

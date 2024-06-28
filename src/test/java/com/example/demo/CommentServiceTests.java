@@ -19,9 +19,6 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testcontainers
-@SpringBootTest
-@ActiveProfiles("test")
 class CommentServiceTests extends UserAwareTestBase {
 
     @Autowired
@@ -74,17 +71,6 @@ class CommentServiceTests extends UserAwareTestBase {
             .containsExactly(newsForTest2, newsForTest, newsForTest1);
     }
 
-    private NewsDto createNewsForTest(String category, String title, String userName) {
 
-        final UserCreateResponse testUser = userService.createUser(new UserCreateRequest(userName));
-        final NewsCreateRequest newsDto = NewsCreateRequest
-            .builder()
-            .categoryName(category)
-            .content(category)
-            .title(title)
-            .userId(testUser.userId()).build();
-
-        return newsService.createNews(newsDto);
-    }
 
 }

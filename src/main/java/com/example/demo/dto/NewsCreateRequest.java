@@ -1,7 +1,6 @@
 package com.example.demo.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +19,6 @@ public class NewsCreateRequest {
     private String content;
 
     @NotBlank
-    @NotNull
     private long userId;
 
     private String categoryName;

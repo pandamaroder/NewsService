@@ -40,22 +40,22 @@ public abstract class TestBase {
     static final String TABLE_NAME_USERS = "demo.users";
     static final String TABLE_NAME_COMMENTS = "demo.comments";
 
-    protected static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
+    static final LocalDateTime BEFORE_MILLENNIUM = LocalDateTime.of(1999, Month.DECEMBER, 31, 23, 59, 59);
 
     @Autowired
     protected Clock clock;
 
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    protected WebTestClient webTestClient;
 
     @Autowired
-    protected WebTestClient webTestClient;
+    protected MutableClock mutableClock;
 
     @LocalServerPort
     protected int port;
 
     @Autowired
-    protected MutableClock mutableClock;
+    private JdbcTemplate jdbcTemplate;
 
     static Instant getTestInstant() {
         return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);

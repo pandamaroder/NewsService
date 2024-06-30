@@ -55,10 +55,10 @@ public class PermissionAspect {
                 .getId();
             
             if (!userIdFromNews.equals(userIdFromRequest)) {
-                throw new NotAuthorizedException("We're sorry but news couldn't be updated by this user");
+                throw new NotAuthorizedException("We're sorry but access denied");
             }
         } else {
-            throw new NotAuthorizedException("News not found");
+            throw new NotAuthorizedException("We're sorry but access denied");
         }
     }
 
@@ -72,8 +72,6 @@ public class PermissionAspect {
                 final String currentHeaderName = headerNames.nextElement();
                 if (currentHeaderName.equalsIgnoreCase(headerName)) {
                     return request.getHeader(currentHeaderName);
-                } else {
-                    throw new IllegalStateException("UserId not found: " + headerName);
                 }
             }
         }

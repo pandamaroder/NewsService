@@ -34,7 +34,7 @@ class NewsControllerTest extends UserAwareTestBase {
 
         webTestClient.put()
             .uri("/news")
-            .header("userId", "1")
+            .header("userId", String.valueOf(Long.MAX_VALUE))
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(newsDto)
@@ -60,7 +60,7 @@ class NewsControllerTest extends UserAwareTestBase {
 
         final var result = webTestClient.put()
             .uri("/news")
-            .header("userId", "2")
+            .header("userId", news.getUserId().toString())
             .accept(MediaType.APPLICATION_JSON)
             .contentType(MediaType.APPLICATION_JSON)
             .bodyValue(newsDto)

@@ -4,6 +4,7 @@ import com.example.demo.model.BaseEntity;
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -59,6 +60,11 @@ public abstract class TestBase {
 
     static Instant getTestInstant() {
         return BEFORE_MILLENNIUM.toInstant(ZoneOffset.UTC);
+    }
+
+    @BeforeEach
+    void clearDataBase() {
+        jdbcTemplate.update("truncate table demo.categories, demo.users, demo.news, demo.comments");
     }
 
     @AfterEach

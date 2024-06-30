@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NewsServiceTests extends UserAwareTestBase {
+class CommentServiceTests extends UserAwareTestBase {
 
     @Autowired
     private NewsService newsService;

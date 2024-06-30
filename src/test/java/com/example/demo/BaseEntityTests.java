@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.reflections.Reflections;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,7 +31,10 @@ class BaseEntityTests extends TestBase {
     void testEntityIsCorrect() {
         final Set<Category> entities = new HashSet<>();
         final Category entity1 = DataHelper.prepareCategory().build();
-        final Category entity2 = Category.builder().name("test2").build();
+        final Category entity2 = Category.builder()
+            .name("test2")
+            .createdAt(LocalDateTime.now(ZoneId.of("Europe/Moscow")))
+            .build();
         entities.add(entity1);
         entities.add(entity2);
         assertThatEntityIsCorrect(entities, categoryRepository);

@@ -1,19 +1,21 @@
 package com.example.demo.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 
-@Getter
-@Setter
+@Data
+@Validated
 @SuperBuilder
+@RequiredArgsConstructor
 public class CommentDto {
 
-    private long id;
+    private Long id;
 
     private String text;
 
-    private long userId;
+    private Long userId;
 
-    private long newsId;
+    private Long newsId;
 }

@@ -1,16 +1,24 @@
 package com.example.demo.dto;
 
-import lombok.Getter;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.springframework.validation.annotation.Validated;
 
-@Getter
+@Data
+@Validated
 @SuperBuilder
+@RequiredArgsConstructor
 public class NewsCreateRequest {
 
+    @NotBlank
     private String title;
 
+    @NotBlank
     private String content;
 
+    @NotBlank
     private long userId;
 
     private String categoryName;

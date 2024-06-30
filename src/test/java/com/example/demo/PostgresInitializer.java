@@ -12,6 +12,7 @@ public class PostgresInitializer implements ApplicationContextInitializer<Config
     private static final PostgreSQLContainer<?> CONTAINER =
             new PostgreSQLContainer<>(DockerImageName.parse("postgres:16.1"))
                     .withUrlParam("prepareThreshold", "0")
+                    //.withUsername()
                     .waitingFor(Wait.forListeningPort());
 
     @Override

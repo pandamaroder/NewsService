@@ -1,5 +1,8 @@
 server:
   port: 8086
+  servlet:
+      context-path: /
+      forward-headers-strategy: framework
 
 spring:
   datasource:
@@ -21,4 +24,12 @@ spring:
         default_schema: demo
 
 
+springdoc:
+    swagger-ui:
+        tagsSorter: alpha
+        operations-sorter: method
 
+swagger:
+    info:
+        title: "API News Service"
+        description: "Backend сервис для приложения «Новостной сервис»"

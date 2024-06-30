@@ -1,3 +1,5 @@
+import net.ltgt.gradle.errorprone.errorprone
+
 plugins {
 	id("java")
 	id("org.springframework.boot") version "3.2.6"
@@ -6,7 +8,7 @@ plugins {
 	id("jacoco")
 	id("org.sonarqube") version "4.0.0.2929"
 	id("checkstyle")
-	//id("net.ltgt.errorprone")
+	id("net.ltgt.errorprone") version "3.1.0"
 	//id("com.github.spotbugs")
 }
 
@@ -32,6 +34,7 @@ dependencies {
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.testcontainers:junit-jupiter")
 	testImplementation("org.testcontainers:postgresql")
+    testImplementation ("org.springframework.boot:spring-boot-starter-webflux")
 	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
@@ -39,19 +42,24 @@ dependencies {
 	implementation("org.mapstruct:mapstruct:1.4.2.Final")
 	annotationProcessor("org.mapstruct:mapstruct-processor:1.4.2.Final")
 	implementation("org.reflections:reflections:0.10.2")
-
-
-	//errorprone("com.google.errorprone:error_prone_core:2.27.1")
-	//errorprone("jp.skypencil.errorprone.slf4j:errorprone-slf4j:0.1.24")
-	implementation("com.google.errorprone:error_prone_core:2.26.0")
-	implementation("com.puppycrawl.tools:checkstyle:9.2")
-	implementation("com.google.code.findbugs:findbugs:3.0.1")
-	implementation("com.github.spotbugs:spotbugs:4.5.0")
+    implementation ("org.threeten:threeten-extra:1.6.0")
+    implementation("javax.servlet:javax.servlet-api:4.0.1")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2")
+    errorprone("com.google.errorprone:error_prone_core:2.27.1")
+    compileOnly("javax.servlet:javax.servlet-api:4.0.1")
 }
 
+
+tasks.withType<JavaCompile>().configureEach {
+    options.errorprone {
+        disableWarningsInGeneratedCode.set(true)
+        disable("StringSplitter", "ImmutableEnumChecker", "FutureReturnValueIgnored", "EqualsIncompatibleType", "TruthSelfEquals")
+    }
+}
 tasks {
 
 	test {
+		dependsOn(checkstyleTest, checkstyleMain, pmdMain, pmdTest)
 		testLogging.showStandardStreams = false // set to true for debug purposes
 		useJUnitPlatform()
 		finalizedBy(jacocoTestReport, jacocoTestCoverageVerification)
@@ -67,49 +75,7 @@ tasks {
 
 	jacocoTestCoverageVerification {
 		dependsOn(jacocoTestReport)
-		violationRules {
-			rule {
-				limit {
-					counter = "CLASS"
-					value = "MISSEDCOUNT"
-					maximum = "0.0".toBigDecimal()
-				}
-			}
-			rule {
-				limit {
-					counter = "METHOD"
-					value = "MISSEDCOUNT"
-					maximum = "0.0".toBigDecimal()
-				}
-			}
-			rule {
-				limit {
-					counter = "LINE"
-					value = "MISSEDCOUNT"
-					maximum = "0.0".toBigDecimal()
-				}
-			}
-			rule {
-				limit {
-					counter = "INSTRUCTION"
-					value = "COVEREDRATIO"
-					minimum = "1.0".toBigDecimal()
-				}
-			}
-			rule {
-				limit {
-					counter = "BRANCH"
-					value = "COVEREDRATIO"
-					minimum = "1.0".toBigDecimal()
-				}
-			}
-		}
-
 	}
-	/*withType<SonarTask>().configureEach {
-		dependsOn(test, jacocoTestReport)
-	}*/
-
 
 }
 

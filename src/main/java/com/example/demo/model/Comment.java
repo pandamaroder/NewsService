@@ -1,7 +1,16 @@
 package com.example.demo.model;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
@@ -22,12 +31,12 @@ public class Comment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id")
     @ToString.Exclude
-    User user;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "news_id")
     @ToString.Exclude
-    News news;
+    private News news;
 
 
 }

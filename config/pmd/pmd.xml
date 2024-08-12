@@ -24,7 +24,6 @@
     </rule>
 
 
-
     <rule ref="category/java/codestyle.xml/ShortClassName">
         <properties>
             <property name="minimum" value="4" />
